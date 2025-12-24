@@ -242,7 +242,22 @@ function meetsRequires(req) {
 function getSection(sectionId) {
   return STORY.sections.find((s) => s.id === sectionId) || null;
 }
+function normalizeState(s, story) {
+  if (!s || typeof s !== "object") s = {};
 
+  // Pull defaults if present, else create safe minimal defaults
+  const d = story?.save?.defaults || {};
+
+  s.stats = (s.stats && typeof s.stats === "object") ? s.stats : (d.stats || { WISDOM: 1, ENDURANCE: 1, AGILITY: 1, LUCK: 1, TIMING: 1 });
+  s.resources = (s.resources && typeof s.resources === "object") ? s.resources : (d.resources || { HP: 10, HEALTH: 10, REPUTATION: 0 });
+  s.inventory = (s.inventory && typeof s.inventory === "object") ? s.inventory : (d.inventory || { consumables: [], weapons: [], armors: [], specialItems: [] });
+  s.flags = (s.flags && typeof s.flags === "object") ? s.flags : (d.flags || {});
+
+  if (!Array.isArray(s.visited)) s.visited = [];
+  if (typeof s.choiceCount !== "number") s.choiceCount = 0;
+
+  return s;
+}
 function enterSection(sectionId) {
   const section = getSection(sectionId);
   if (!section) {
