@@ -1,0 +1,568 @@
+{
+  "schemaVersion": "1.0",
+  "storyId": "lorecraft_tutorial_mvp",
+  "title": "LORECRAFT: The World That Notices",
+  "author": "VerseCraft",
+  "mvp": true,
+  "ruleset": {
+    "stats": ["WISDOM", "ENDURANCE", "AGILITY", "LUCK", "TIMING"],
+    "resources": ["HP", "HEALTH", "REPUTATION"],
+    "inventory": {
+      "maxConsumables": 20,
+      "maxWeapons": 9,
+      "maxArmors": 9,
+      "maxSpecialItems": 9
+    }
+  },
+  "startSectionId": "S01",
+  "sections": [
+    {
+      "id": "S01",
+      "title": "The Unfinished Arrival",
+      "tone": ["uneasy"],
+      "teach": ["HP", "HEALTH"],
+      "text": [
+        "You wake on cold stone in a ruin that feels half-written.",
+        "The ceiling arches like a sentence that never found its end.",
+        "When you push yourself up, something sharp bites your palm—small, petty pain with a big opinion."
+      ],
+      "onEnter": [
+        { "op": "ADD_RESOURCE", "resource": "HP", "amount": -2 },
+        { "op": "SET_FLAG", "key": "injured_once", "value": true },
+        { "op": "APPEND_TEXT", "lines": ["Your HP dips—temporary, measurable. But beneath it, something else shifts, quieter. Health is not a number you can bluff."] }
+      ],
+      "choices": [
+        { "id": "C1", "text": "Stand and listen.", "to": "S02" },
+        { "id": "C2", "text": "Move forward anyway.", "to": "S03" }
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "Details Others Miss",
+      "tone": ["dry_humor"],
+      "teach": ["WISDOM", "TIMING"],
+      "text": [
+        "The air smells like old rain and older decisions.",
+        "Your breath fogs briefly, then fades—like the world is conserving effort."
+      ],
+      "checks": [
+        {
+          "id": "CHK_WISDOM_1",
+          "stat": "WISDOM",
+          "dc": 2,
+          "onPass": [
+            {
+              "op": "APPEND_TEXT",
+              "lines": [
+                "With a little attention, you notice scuffs in the dust—recent. Confident footsteps.",
+                "That confidence has ended many stories early."
+              ]
+            },
+            { "op": "SET_FLAG", "key": "saw_scuffs", "value": true }
+          ],
+          "onFail": [
+            {
+              "op": "APPEND_TEXT",
+              "lines": [
+                "It’s quiet. Quiet enough to feel safe.",
+                "That is a common mistake."
+              ]
+            }
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Follow the safer-looking corridor.",
+          "to": "S03",
+          "timing": {
+            "mode": "SOFT",
+            "lateAfterChoiceCount": 2,
+            "penalty": [{ "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 }]
+          }
+        },
+        {
+          "id": "C2",
+          "text": "Take the narrow gap before it closes.",
+          "to": "S04",
+          "timing": { "mode": "EXPIRE", "expiresAfterChoiceCount": 2 }
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "The Weight of Moving On",
+      "tone": ["neutral"],
+      "teach": ["ENDURANCE", "HP"],
+      "text": [
+        "The corridor slopes downward. The stone sweats. The floor is uneven in the way that punishes ankles and pride.",
+        "Halfway through, the ceiling dips. You have to crouch—then crawl—then decide how badly you want to keep going."
+      ],
+      "checks": [
+        {
+          "id": "CHK_ENDURANCE_1",
+          "stat": "ENDURANCE",
+          "dc": 2,
+          "onPass": [
+            { "op": "APPEND_TEXT", "lines": ["You grit your teeth and keep your rhythm. The strain stays small—paid, but affordable."] },
+            { "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 },
+            { "op": "SET_FLAG", "key": "endured_corridor", "value": true }
+          ],
+          "onFail": [
+            {
+              "op": "APPEND_TEXT",
+              "lines": [
+                "You make it through, but every movement feels like bargaining.",
+                "You win. You just don’t win clean."
+              ]
+            },
+            { "op": "ADD_RESOURCE", "resource": "HP", "amount": -3 },
+            { "op": "SET_FLAG", "key": "strained_corridor", "value": true }
+          ]
+        }
+      ],
+      "choices": [
+        { "id": "C1", "text": "Stop and catch your breath.", "to": "S04" },
+        { "id": "C2", "text": "Push forward before the stone changes its mind.", "to": "S04" }
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "Too Slow or Too Careful",
+      "tone": ["uneasy"],
+      "teach": ["AGILITY", "TIMING"],
+      "text": [
+        "Ahead, a doorframe is split by a hairline crack of light—thin, living.",
+        "Something on the other side shifts. The crack narrows, as if the world is blinking."
+      ],
+      "checks": [
+        {
+          "id": "CHK_AGILITY_1",
+          "stat": "AGILITY",
+          "dc": 2,
+          "onPass": [
+            { "op": "APPEND_TEXT", "lines": ["Your body understands the moment before your thoughts do. You’re already moving."] },
+            { "op": "SET_FLAG", "key": "caught_the_moment", "value": true }
+          ],
+          "onFail": [
+            { "op": "APPEND_TEXT", "lines": ["You hesitate. Not long—just long enough for the world to notice you negotiating with yourself."] },
+            { "op": "SET_FLAG", "key": "hesitated_once", "value": true }
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Slip through the crack while it’s still there.",
+          "to": "S05",
+          "timing": { "mode": "EXPIRE", "expiresAfterChoiceCount": 4 }
+        },
+        {
+          "id": "C2",
+          "text": "Study it first. Carefully.",
+          "to": "S05",
+          "timing": {
+            "mode": "SOFT",
+            "lateAfterChoiceCount": 3,
+            "penalty": [
+              { "op": "APPEND_TEXT", "lines": ["By the time you commit, the opening is less forgiving. So is the floor."] },
+              { "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "Luck Does Not Explain Itself",
+      "tone": ["dry_humor"],
+      "teach": ["LUCK"],
+      "text": [
+        "The next chamber is a dead-end—except for a pedestal holding a small clay bowl.",
+        "Inside: a folded strip of parchment and a single coin that looks too new to belong here."
+      ],
+      "checks": [
+        {
+          "id": "CHK_LUCK_1",
+          "stat": "LUCK",
+          "dc": 2,
+          "onPass": [
+            {
+              "op": "APPEND_TEXT",
+              "lines": [
+                "The coin flips in your fingers like it wants attention.",
+                "It lands on its edge. Of course it does.",
+                "That shouldn’t have worked. Let’s not talk about it."
+              ]
+            },
+            { "op": "SET_FLAG", "key": "lucky_edge", "value": true },
+            { "op": "ADD_RESOURCE", "resource": "REPUTATION", "amount": 1 }
+          ],
+          "onFail": [
+            {
+              "op": "APPEND_TEXT",
+              "lines": [
+                "The coin slips. The bowl cracks. The room seems… pleased.",
+                "Luck isn’t always a gift. Sometimes it’s just a decision the world makes without you."
+              ]
+            },
+            { "op": "SET_FLAG", "key": "unlucky_break", "value": true },
+            { "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 }
+          ]
+        }
+      ],
+      "choices": [
+        { "id": "C1", "text": "Take the parchment.", "to": "S06" },
+        { "id": "C2", "text": "Leave it. Walk away like you’ve never wanted anything.", "to": "S06" }
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "Inventory Is Memory",
+      "tone": ["neutral"],
+      "teach": ["INVENTORY"],
+      "text": [
+        "The parchment is a rough map drawn by an impatient hand.",
+        "Pinned to it is a small charm—an ink-black token stamped with a spiral mark.",
+        "It feels warm, like it remembers your grip."
+      ],
+      "onEnter": [
+        { "op": "SET_FLAG", "key": "saw_charm", "value": true }
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Take the inked charm (Special Item).",
+          "to": "S07",
+          "onChoose": [
+            { "op": "ADD_ITEM", "slot": "specialItems", "itemId": "INKED_CHARM" },
+            { "op": "SET_FLAG", "key": "has_charm", "value": true },
+            { "op": "APPEND_TEXT", "lines": ["You pocket it. The air relaxes slightly, like a problem set aside."] }
+          ]
+        },
+        {
+          "id": "C2",
+          "text": "Take only the map.",
+          "to": "S07",
+          "onChoose": [
+            { "op": "SET_FLAG", "key": "took_map_only", "value": true },
+            { "op": "APPEND_TEXT", "lines": ["You leave the charm where it is. The spiral mark watches you anyway."] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "People Remember",
+      "tone": ["subtle_humor"],
+      "teach": ["REPUTATION"],
+      "text": [
+        "You find a lantern-lit alcove where a lone sentry sits behind a simple wooden barricade.",
+        "Their armor is mismatched. Their eyes are sharp. Their patience is decorative.",
+        "They look you over the way someone inspects a story opening."
+      ],
+      "checks": [
+        {
+          "id": "CHK_REP_1",
+          "resource": "REPUTATION",
+          "dc": 1,
+          "onPass": [
+            { "op": "APPEND_TEXT", "lines": ["Their shoulders drop a fraction. 'Right. You’re one of the ones who finishes things.'"] },
+            { "op": "SET_FLAG", "key": "guard_trust", "value": true }
+          ],
+          "onFail": [
+            { "op": "APPEND_TEXT", "lines": ["Their mouth tightens. 'I won’t ask what you did. The look tells me enough.'"] },
+            { "op": "SET_FLAG", "key": "guard_suspicion", "value": true }
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Show the inked charm.",
+          "to": "S08",
+          "requires": { "hasItem": { "slot": "specialItems", "itemId": "INKED_CHARM" } },
+          "onChoose": [
+            { "op": "APPEND_TEXT", "lines": ["The sentry’s gaze snaps to the spiral mark. '…Ah.' Like they’ve just remembered a debt."] },
+            { "op": "ADD_RESOURCE", "resource": "REPUTATION", "amount": 1 },
+            { "op": "SET_FLAG", "key": "charm_acknowledged", "value": true }
+          ]
+        },
+        {
+          "id": "C2",
+          "text": "Say nothing. Ask to pass.",
+          "to": "S08",
+          "onChoose": [
+            { "op": "APPEND_TEXT", "lines": ["The sentry studies you longer than necessary. That’s how you know it was necessary."] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "title": "The World Pauses",
+      "tone": ["uneasy"],
+      "teach": ["TIMING"],
+      "text": [
+        "Beyond the barricade is a stairwell spiraling down into softer darkness.",
+        "A faint door stands ajar at the bottom—inviting in the way a mouth invites."
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Take the ajar door now.",
+          "to": "S09",
+          "timing": { "mode": "EXPIRE", "expiresAfterChoiceCount": 9 },
+          "onChoose": [
+            { "op": "SET_FLAG", "key": "took_door_in_time", "value": true },
+            { "op": "APPEND_TEXT", "lines": ["You move before the moment cools. The hinge doesn’t complain."] }
+          ]
+        },
+        {
+          "id": "C2",
+          "text": "Descend slowly. Listen for movement first.",
+          "to": "S09",
+          "timing": {
+            "mode": "SOFT",
+            "lateAfterChoiceCount": 8,
+            "penalty": [
+              { "op": "APPEND_TEXT", "lines": ["The moment has… cooled. The door is still there, but it feels less interested in being kind."] },
+              { "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 }
+            ]
+          },
+          "onChoose": [
+            { "op": "SET_FLAG", "key": "late_on_door", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "title": "The First Mirror",
+      "tone": ["uncanny_humor"],
+      "teach": ["WEALTH_META"],
+      "text": [
+        "Inside is a small chamber with a mirror made of smoky glass.",
+        "Your reflection looks like you—mostly. The edges of it hesitate, like they’re checking rules.",
+        "A thin line of script appears across the glass, writing itself as you breathe."
+      ],
+      "checks": [
+        {
+          "id": "CHK_WISDOM_META",
+          "stat": "WISDOM",
+          "dc": 2,
+          "onPass": [
+            { "op": "APPEND_TEXT", "lines": ["The script reads: 'You notice patterns. Good. The world hates repeating itself without supervision.'"] },
+            { "op": "SET_FLAG", "key": "mirror_comments_wisdom", "value": true }
+          ],
+          "onFail": [
+            { "op": "APPEND_TEXT", "lines": ["The script reads: 'Brave. Simple. Efficient. The stone approves.'"] },
+            { "op": "SET_FLAG", "key": "mirror_comments_simple", "value": true }
+          ]
+        },
+        {
+          "id": "CHK_LUCK_META",
+          "stat": "LUCK",
+          "dc": 2,
+          "onPass": [
+            { "op": "APPEND_TEXT", "lines": ["A second line appears: 'Ah. You’re shaping yourself the hard way.'"] },
+            { "op": "SET_FLAG", "key": "mirror_comments_luck", "value": true }
+          ],
+          "onFail": [
+            { "op": "APPEND_TEXT", "lines": ["A second line appears, then smudges itself out. You get the sense it was going to be unhelpful anyway."] }
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Touch the mirror.",
+          "to": "S10",
+          "onChoose": [
+            { "op": "APPEND_TEXT", "lines": ["The glass is warm. Not from heat—from attention."] },
+            { "op": "SET_FLAG", "key": "touched_mirror", "value": true }
+          ]
+        },
+        {
+          "id": "C2",
+          "text": "Turn away. Refuse the feeling of being measured.",
+          "to": "S10",
+          "onChoose": [
+            { "op": "APPEND_TEXT", "lines": ["You don’t look back. The mirror does anyway."] },
+            { "op": "SET_FLAG", "key": "avoided_mirror", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "title": "Health Is Not HP",
+      "tone": ["serious"],
+      "teach": ["HEALTH", "HP"],
+      "text": [
+        "Past the mirror is a narrow hall lined with shallow hooks.",
+        "One hook snags your sleeve—and for a split second, it feels like it snags something deeper than cloth."
+      ],
+      "checks": [
+        {
+          "id": "CHK_TIMING_HEALTH",
+          "stat": "TIMING",
+          "dc": 2,
+          "onPass": [
+            { "op": "APPEND_TEXT", "lines": ["You move with the moment instead of against it. The hook slips free, disappointed."] },
+            { "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 }
+          ],
+          "onFail": [
+            {
+              "op": "APPEND_TEXT",
+              "lines": [
+                "You pull the wrong way. The hook catches and tugs—hard.",
+                "Your HP drops like a bruise. But your Health… your Health feels the insult and remembers it."
+              ]
+            },
+            { "op": "ADD_RESOURCE", "resource": "HP", "amount": -2 },
+            { "op": "ADD_RESOURCE", "resource": "HEALTH", "amount": -1 },
+            { "op": "SET_FLAG", "key": "health_marked", "value": true }
+          ]
+        }
+      ],
+      "onEnter": [
+        { "op": "APPEND_TEXT", "lines": ["HP returns. Health changes you. The world will treat you differently when you’re worn thin."] }
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Wrap your injured hand (use a bandage if you have one).",
+          "to": "S11",
+          "requires": { "optionalItem": { "slot": "consumables", "itemId": "BANDAGE" } },
+          "onChoose": [
+            {
+              "op": "APPEND_TEXT",
+              "lines": [
+                "You wrap the wound. It’s practical. The world respects practical.",
+                "Respect is not the same as kindness."
+              ]
+            },
+            { "op": "ADD_RESOURCE", "resource": "HP", "amount": 2 },
+            { "op": "REMOVE_ITEM", "slot": "consumables", "itemId": "BANDAGE" },
+            { "op": "SET_FLAG", "key": "used_bandage", "value": true }
+          ]
+        },
+        {
+          "id": "C2",
+          "text": "Ignore it. Keep moving.",
+          "to": "S11",
+          "onChoose": [
+            { "op": "APPEND_TEXT", "lines": ["You keep going. You’ve met worse. The world is taking notes."] },
+            { "op": "SET_FLAG", "key": "ignored_wounds", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S11",
+      "title": "The World Gets Tired",
+      "tone": ["dry_humor", "uneasy"],
+      "teach": ["TIMING", "REPUTATION", "CONSEQUENCE"],
+      "text": [
+        "The final chamber is simple: a stone arch, an ink-dark threshold, and a floor covered in old footprints.",
+        "Some prints run. Some stop.",
+        "A voice—quiet, bored, ancient—seems to speak from the arch itself:",
+        "'Stories don’t like to wait forever.'"
+      ],
+      "onEnter": [
+        { "op": "SET_FLAG", "key": "reached_threshold", "value": true }
+      ],
+      "choices": [
+        {
+          "id": "C1",
+          "text": "Step through decisively.",
+          "to": "S12",
+          "timing": { "mode": "SOFT", "lateAfterChoiceCount": 12, "penalty": [{ "op": "ADD_RESOURCE", "resource": "REPUTATION", "amount": -1 }] },
+          "requires": {
+            "anyOf": [
+              { "minResource": { "resource": "REPUTATION", "amount": 1 } },
+              { "flagTrue": "took_door_in_time" },
+              { "flagTrue": "charm_acknowledged" }
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "text": "Hesitate at the threshold. Look for a better answer.",
+          "to": "S13",
+          "timing": { "mode": "SOFT", "lateAfterChoiceCount": 11, "penalty": [{ "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 }] }
+        },
+        {
+          "id": "C3",
+          "text": "Try to force the arch to explain itself.",
+          "to": "S13",
+          "onChoose": [
+            { "op": "APPEND_TEXT", "lines": ["The threshold does not argue. It simply becomes less interested in cooperating."] },
+            { "op": "ADD_RESOURCE", "resource": "REPUTATION", "amount": -1 },
+            { "op": "SET_FLAG", "key": "argued_with_world", "value": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "title": "ENDING A — The World Accepts You",
+      "tone": ["earned", "quiet"],
+      "teach": ["ENDING_GOOD"],
+      "text": [
+        "You step through the threshold and the air changes—thicker, warmer, like a room that’s been waiting for someone who actually arrives.",
+        "The arch does not close behind you. That, somehow, is the kindness.",
+        "A thin line of ink writes itself across the stone at your feet:",
+        "'You may stay. That is not permission given lightly.'",
+        "For the first time since you woke, you feel the world stop measuring you long enough to simply… hold you."
+      ],
+      "onEnter": [
+        { "op": "SET_FLAG", "key": "ending_good", "value": true },
+        { "op": "APPEND_TEXT", "lines": ["(The world accepts you. Tutorial complete.)"] }
+      ],
+      "choices": [
+        { "id": "C1", "text": "Return to Main Menu.", "to": "S12" }
+      ]
+    },
+    {
+      "id": "S13",
+      "title": "ENDING B — The World Moves On",
+      "tone": ["calm", "unsettling"],
+      "teach": ["ENDING_BAD"],
+      "text": [
+        "You wait for the threshold to soften. It doesn’t.",
+        "The arch remains, patient in the way stones are patient with rain.",
+        "Your breath feels louder than it should. Your thoughts feel smaller than they were a moment ago.",
+        "A thin line of ink appears across the stone—brief, clean, final:",
+        "'The story finishes. You are no longer required.'",
+        "There is no villain. No punishment speech. The world simply completes itself without you.",
+        "And you understand, too late, that being unnecessary is its own kind of ending."
+      ],
+      "onEnter": [
+        { "op": "SET_FLAG", "key": "ending_bad", "value": true },
+        { "op": "APPEND_TEXT", "lines": ["(The world moves on. Tutorial complete.)"] }
+      ],
+      "choices": [
+        { "id": "C1", "text": "Return to Main Menu.", "to": "S13" }
+      ]
+    }
+  ],
+  "uiHints": {
+    "revealChecks": "POST_OUTCOME_ONLY",
+    "timingUI": "HIDDEN",
+    "metaAwarenessIntensity": "SUBTLE"
+  },
+  "save": {
+    "version": "1.0",
+    "defaults": {
+      "stats": { "WISDOM": 1, "ENDURANCE": 1, "AGILITY": 1, "LUCK": 1, "TIMING": 1 },
+      "resources": { "HP": 10, "HEALTH": 10, "REPUTATION": 0 },
+      "inventory": { "consumables": ["BANDAGE"], "weapons": [], "armors": [], "specialItems": [] },
+      "flags": {},
+      "choiceCount": 0,
+      "visited": []
+    }
+  }
+}
