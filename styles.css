@@ -19,8 +19,73 @@ header {
 
 main {
   padding: 1.25rem;
-  max-width: 720px;
+  max-width: 800px;
   margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid #333;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  background: #0f0f0f;
+}
+
+.hud {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+.hud-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+button {
+  background: #1b1b1b;
+  color: #eee;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  font-size: 1rem;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.menu {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.story p {
+  line-height: 1.55;
+  margin: 0 0 0.85rem 0;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.choiceBtn {
+  text-align: left;
+  width: 100%;
 }
 
 footer {
