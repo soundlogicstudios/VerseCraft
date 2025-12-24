@@ -1,0 +1,375 @@
+/* styles.css — v1.2 UI iteration additions/overrides
+   - HUD simplified (HP/LVL/XP only)
+   - One Save / One Load buttons (modal picker styles)
+   - Scene placeholder image area
+   - Story text box pushed down below scene placeholder
+   - Tiered system lines: whisper / neutral / explicit
+*/
+
+:root{
+  --bg:#0c1016;
+  --panel:#121a24;
+  --panel2:#0f1620;
+  --border:#2a3a4d;
+  --text:#e8f0ff;
+  --muted:#9fb2c9;
+  --muted2:#7f93ad;
+  --bad:#ff5b6a;
+  --good:#4ee59f;
+  --accent:#7aa7ff;
+}
+
+*{ box-sizing:border-box; }
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+#app{
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+
+.panel-soft{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+}
+
+.hr{
+  height:1px;
+  background:var(--border);
+  margin:14px 0;
+}
+
+.small{
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.prewrap{ white-space:pre-wrap; }
+
+.notice-bad{
+  color: var(--bad);
+}
+
+.title{ margin:0; letter-spacing:.5px; }
+.subtitle{ margin:6px 0 0 0; color: var(--muted2); }
+
+button{
+  border:1px solid var(--border);
+  background:#0e1621;
+  color:var(--text);
+  padding:10px 12px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+button:hover:not(:disabled){
+  border-color: var(--accent);
+}
+
+.icon-btn{
+  padding:8px 10px;
+  border-radius:10px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom: 14px;
+}
+
+.hud{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  align-items:center;
+  color: var(--muted);
+}
+
+.hud strong{ color: var(--text); }
+
+.menu-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:10px;
+  margin-top: 14px;
+}
+
+@media (min-width: 680px){
+  .menu-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.slot-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.slot-left{ min-width: 200px; }
+.slot-right{ justify-content:flex-end; }
+
+/* Story shell layout */
+.story-shell{
+  padding: 14px;
+}
+
+.scene-placeholder{
+  width: 100%;
+  height: 190px;
+  border-radius: 14px;
+  border: 1px dashed rgba(122,167,255,.45);
+  background: linear-gradient(180deg, rgba(122,167,255,.10), rgba(0,0,0,.0));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 680px){
+  .scene-placeholder{ height: 230px; }
+}
+
+.scene-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.scene-fallback{
+  text-align:center;
+  padding: 14px;
+}
+
+.scene-badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(122,167,255,.45);
+  color: var(--accent);
+  font-weight:800;
+  letter-spacing:.6px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.scene-hint{
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+/* Story text box */
+.story-box{
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#0b121a;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.story p{
+  margin: 0 0 10px 0;
+  line-height: 1.55;
+}
+
+.footerline{ margin-top: 6px; }
+
+/* Choices */
+.choices{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top: 10px;
+}
+
+.choiceBtn{
+  width:100%;
+  text-align:left;
+  padding: 12px 14px;
+  border-radius:14px;
+  background:#0e1621;
+}
+
+/* Tiered system lines */
+.sys{
+  margin: 0 0 10px 0;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.03);
+}
+
+.sys-whisper{
+  font-style: italic;
+  color: var(--muted);
+  opacity: .95;
+}
+
+.sys-neutral{
+  font-style: italic;
+  color: #cfe0ff;
+}
+
+.sys-explicit{
+  font-weight: 900;
+  color: var(--bad);
+  border-color: rgba(255,91,106,.6);
+  background: rgba(255,91,106,.08);
+}
+
+/* Modal */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.55);
+  display:none;
+  z-index: 50;
+  padding: 18px;
+}
+
+.modal{
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.label-block{
+  font-weight:800;
+  letter-spacing:.5px;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+/* Wealth grid */
+.wealth-grid{
+  display:grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap:8px;
+}
+
+.wealth-cell{
+  border:1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 8px;
+  text-align:center;
+  background: rgba(255,255,255,.03);
+}
+
+.wealth-k{
+  font-weight:900;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.wealth-v{
+  font-size: 16px;
+  font-weight:800;
+}
+
+/* Key-value cells (Character Sheet) */
+.kv{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap:10px;
+}
+
+@media (min-width: 680px){
+  .kv{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+}
+
+.cell{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+  background: rgba(255,255,255,.03);
+}
+
+.cell .label{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: .3px;
+  margin-bottom: 6px;
+}
+
+.cell .value{
+  font-size: 15px;
+  font-weight: 900;
+}
+
+/* Picker modal */
+.picker{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.picker-row{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  background: rgba(255,255,255,.03);
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.picker-title{
+  font-weight: 900;
+}
+
+.picker-sub{
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.picker-actions{
+  display:flex;
+  gap:8px;
+}
