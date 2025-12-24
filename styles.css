@@ -1,0 +1,233 @@
+:root {
+  --bg: #0f0f10;
+  --panel: #141417;
+  --panel2: #101012;
+  --border: #2a2a2f;
+  --text: #e9e9ee;
+  --muted: rgba(233,233,238,.72);
+  --muted2: rgba(233,233,238,.55);
+  --danger: #ff7777;
+  --ok: #77ff99;
+  --radius: 14px;
+  --pad: 16px;
+  --maxw: 820px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: #0d0d0f;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px var(--pad);
+}
+
+.brand-title {
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  font-size: .9rem;
+  color: var(--muted2);
+  margin-top: 4px;
+}
+
+.tag {
+  font-size: .85rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  padding: 8px 10px;
+  border-radius: 999px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: #0d0d0f;
+  color: var(--muted2);
+  font-size: .85rem;
+  padding: 12px 0;
+  margin-top: 18px;
+}
+
+.app { padding: 18px 0; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.topbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.hud {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: var(--muted);
+}
+
+.hud strong { color: var(--text); }
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  background: #1a1a1f;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 1rem;
+}
+
+button:disabled { opacity: .45; }
+button:active { transform: translateY(1px); }
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+@media (min-width: 680px) {
+  :root { --pad: 24px; }
+  .menu-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.story-title {
+  margin: 0 0 10px 0;
+}
+
+.scene {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #101014;
+  margin: 10px 0 14px 0;
+}
+
+.scene .glyph {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #0f0f12;
+  font-size: 28px;
+}
+
+.scene .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scene .meta .mood { color: var(--muted2); font-size: .9rem; }
+
+.story p {
+  line-height: 1.58;
+  margin: 0 0 12px 0;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.choiceBtn {
+  width: 100%;
+  text-align: left;
+}
+
+.small {
+  color: var(--muted2);
+  font-size: .85rem;
+  margin-top: 12px;
+}
+
+.hr {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 0;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  padding: 18px;
+  overflow: auto;
+  z-index: 999;
+}
+
+.modal {
+  max-width: var(--maxw);
+  margin: 40px auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.modal h3 { margin: 0 0 10px 0; }
+.kv { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.kv .cell { padding: 10px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel2); }
+.kv .label { color: var(--muted2); font-size: .85rem; }
+.kv .value { font-weight: 700; margin-top: 2px; }
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-block;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  padding: 8px 10px;
+  border-radius: 999px;
+  margin: 4px 6px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.notice-ok { color: var(--ok); }
+.notice-bad { color: var(--danger); }
