@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, serif;
+  background: #111;
+  color: #eee;
+}
+
+header {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+main {
+  padding: 1.25rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+footer {
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
