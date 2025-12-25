@@ -1,4 +1,4 @@
-# VerseCraft
+v1.2 # VerseCraft
 
 **Narrative RPG Platform — System-First, Story-Driven**
 
