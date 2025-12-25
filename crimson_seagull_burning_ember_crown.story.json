@@ -1,0 +1,147 @@
+{
+  "storyId": "crimson_seagull_ember_crown",
+  "title": "The Crimson Seagull and the Burning Ember Crown",
+  "subtitle": "A Mythic Pirate Adventure Demo",
+  "itemSet": "Nautical Myth",
+  "startSectionId": "CS1",
+  "items": [
+    {
+      "id": "Hardtack",
+      "title": "Hardtack",
+      "slot": "Consumable",
+      "rarity": "Common",
+      "consumeOnUse": true,
+      "values": { "HP": 1, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "Dry as regret. Still food."
+    },
+    {
+      "id": "Healing Poultice",
+      "title": "Healing Poultice",
+      "slot": "Consumable",
+      "rarity": "Uncommon",
+      "consumeOnUse": true,
+      "values": { "HP": 3, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": ["Bleeding"],
+      "description": "Green paste that works like mercy."
+    },
+    {
+      "id": "Rum",
+      "title": "Rum",
+      "slot": "Consumable",
+      "rarity": "Common",
+      "consumeOnUse": true,
+      "values": { "HP": 1, "Reputation": 0, "Timing": -1 },
+      "flagsSet": ["Reckless"],
+      "flagsClear": [],
+      "description": "Courage in a bottle. Consequences in the morning."
+    },
+    {
+      "id": "Cutlass",
+      "title": "Cutlass",
+      "slot": "Weapon",
+      "rarity": "Common",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "Salt-stained steel with stories of its own."
+    },
+    {
+      "id": "Naval Coat",
+      "title": "Naval Coat",
+      "slot": "Armor",
+      "rarity": "Uncommon",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "A coat that makes you look like you belong."
+    },
+    {
+      "id": "Lantern",
+      "title": "Lantern",
+      "slot": "Special",
+      "rarity": "Uncommon",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "A small sun you can carry."
+    },
+    {
+      "id": "Ember Crown",
+      "title": "Ember Crown",
+      "slot": "Special",
+      "rarity": "Artifact",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": ["Crowned"],
+      "flagsClear": [],
+      "description": "Warm to the touch. Alive in the dark."
+    }
+  ],
+  "save": {
+    "defaults": {
+      "sectionId": "CS1",
+      "stats": { "W": 2, "E": 2, "A": 2, "L": 2, "T": 2, "H": 2 },
+      "resources": { "HP": 10, "MAX_HP": 10, "REPUTATION": 0, "TIMING": 0 },
+      "progress": { "level": 1, "xp": 0 },
+      "flags": {},
+      "inventory": {
+        "consumables": ["Hardtack"],
+        "weapons": ["Cutlass"],
+        "armors": ["Naval Coat"],
+        "specialItems": ["Lantern"]
+      },
+      "equipped": { "weapon": "Cutlass", "armor": "Naval Coat", "special": "Lantern" }
+    }
+  },
+  "sections": [
+    {
+      "id": "CS1",
+      "text": [
+        "The sea is ink. The ship is a whisper. Above you, a crimson seagull circles like an omen.",
+        { "__sys": true, "tier": "neutral", "text": "Placeholder Demo: This file exists so the story loads from the library. Full Crimson Seagull comes next." }
+      ],
+      "choices": [
+        { "id": "CS1A", "text": "Check the Lantern and descend below deck.", "to": "CS2" },
+        { "id": "CS1B", "text": "Stand watch. Trust your instincts.", "to": "CS3" }
+      ]
+    },
+    {
+      "id": "CS2",
+      "text": [
+        "Below deck, you find a velvet-wrapped shape pulsing with heat: the Ember Crown.",
+        { "__sys": true, "tier": "neutral", "text": "You gain: Ember Crown (Artifact)." }
+      ],
+      "choices": [
+        { "id": "CS2A", "text": "Take it. Accept whatever follows.", "to": "CS4" },
+        { "id": "CS2B", "text": "Leave it and return above.", "to": "CS3" }
+      ]
+    },
+    {
+      "id": "CS3",
+      "text": [
+        "Wind snaps the sails. Somewhere in the dark, something answers the ship’s creak."
+      ],
+      "choices": [
+        { "id": "CS3A", "text": "Return to Main Menu.", "to": "MENU" },
+        { "id": "CS3B", "text": "Restart Crimson Seagull.", "to": "CS1" }
+      ]
+    },
+    {
+      "id": "CS4",
+      "text": [
+        "The Ember Crown warms your palms. The crimson seagull screams once, like approval.",
+        { "__sys": true, "tier": "whisper", "text": "A world notices when you wear its fire." }
+      ],
+      "choices": [
+        { "id": "CS4A", "text": "Return to Main Menu.", "to": "MENU" },
+        { "id": "CS4B", "text": "Restart Crimson Seagull.", "to": "CS1" }
+      ]
+    }
+  ]
+}
