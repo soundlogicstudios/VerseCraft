@@ -1,0 +1,33 @@
+{
+  "storyId": "oregon_trail_demo_v1",
+  "title": "Oregon Trail: A Short Survival Run",
+  "startSectionId": "OT1",
+  "save": {
+    "defaults": {
+      "sectionId": "OT1",
+      "stats": { "W": 2, "E": 2, "A": 2, "L": 2, "T": 2, "H": 2 },
+      "resources": { "HP": 10, "REPUTATION": 0 },
+      "progress": { "level": 1, "xp": 0 },
+      "flags": {},
+      "inventory": {
+        "consumables": ["healing_salve"],
+        "weapons": ["rusty_dagger"],
+        "armors": ["leather_jerkin"],
+        "specialItems": ["candle"]
+      },
+      "equipped": { "weapon": "rusty_dagger", "armor": "leather_jerkin", "special": "candle" }
+    }
+  },
+  "sections": [
+    {
+      "id": "OT1",
+      "text": [
+        "You hitch the wagon. The trail doesn’t care if you’re ready.",
+        { "__sys": true, "tier": "neutral", "text": "Oregon Trail demo stub loaded. Next: expand into full tutorial later." }
+      ],
+      "choices": [
+        { "id": "OT1_MENU", "text": "Return to Main Menu.", "to": "MENU" }
+      ]
+    }
+  ]
+}
