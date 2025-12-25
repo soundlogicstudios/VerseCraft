@@ -1,0 +1,100 @@
+{
+  "storyId": "oregon_trail_demo_v2",
+  "title": "Oregon Trail",
+  "startSectionId": "OT1",
+  "save": {
+    "defaults": {
+      "sectionId": "OT1",
+      "stats": { "W": 2, "E": 2, "A": 2, "L": 2, "T": 2, "H": 2 },
+      "resources": { "HP": 10, "REPUTATION": 0 },
+      "progress": { "level": 1, "xp": 0 },
+      "flags": { "river_scouted": false },
+      "inventory": {
+        "consumables": ["healing_salve"],
+        "weapons": ["rusty_dagger"],
+        "armors": ["leather_jerkin"],
+        "specialItems": ["candle"]
+      },
+      "equipped": { "weapon": "rusty_dagger", "armor": "leather_jerkin", "special": "candle" }
+    }
+  },
+  "sections": [
+    {
+      "id": "OT1",
+      "text": [
+        "The trail is a long sentence with no punctuation.",
+        "By midday, you reach a river that doesn’t look impressed by wagons.",
+        { "__sys": true, "tier": "whisper", "text": "Demo hook: a classic river crossing—risk, clarity, and fair HP penalties." }
+      ],
+      "choices": [
+        { "id": "OT1_SCOUT", "text": "Scout for a shallow crossing.", "to": "OT2" },
+        { "id": "OT1_PUSH", "text": "Cross immediately (save time, risk damage).", "to": "OT3" }
+      ]
+    },
+    {
+      "id": "OT2",
+      "text": [
+        "You walk the bank, eyes on the current, ears on your own doubt.",
+        "You find a shallow bend—still dangerous, but negotiable."
+      ],
+      "choices": [
+        {
+          "id": "OT2_MARK",
+          "text": "Mark the spot and return to the wagon.",
+          "to": "OT4",
+          "onChoose": [
+            { "op": "SET_FLAG", "key": "river_scouted", "value": true },
+            { "op": "APPEND_TEXT", "lines": [{ "__sys": true, "tier": "whisper", "text": "You learned something. Risk goes down." }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OT3",
+      "text": [
+        "You urge the wagon forward. The river answers immediately.",
+        "Cold water slaps the wheels and tries to take a vote.",
+        { "__sys": true, "tier": "explicit", "text": "Reckless crossings can cost HP. Here, it’s small but real." }
+      ],
+      "choices": [
+        {
+          "id": "OT3_TAKE",
+          "text": "Fight through the current.",
+          "to": "OT5",
+          "onChoose": [
+            { "op": "ADD_RESOURCE", "resource": "HP", "amount": -2 },
+            { "op": "APPEND_TEXT", "lines": [{ "__sys": true, "tier": "neutral", "text": "HP -2." }] }
+          ]
+        },
+        { "id": "OT3_BACK", "text": "Back off and scout first.", "to": "OT2" }
+      ]
+    },
+    {
+      "id": "OT4",
+      "text": [
+        "You line the wagon up at the shallow bend.",
+        "The river still wants trouble, but you’re not offering as much."
+      ],
+      "choices": [
+        {
+          "id": "OT4_CROSS",
+          "text": "Cross at the shallow bend.",
+          "to": "OT5",
+          "onChoose": [
+            { "op": "APPEND_TEXT", "lines": [{ "__sys": true, "tier": "whisper", "text": "Good call. The risk was managed." }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OT5",
+      "text": [
+        "On the far bank, you take inventory of what survived: wagon, supplies, pride.",
+        { "__sys": true, "tier": "neutral", "text": "Oregon Trail demo stub complete. Next: expand choices, hazards, and longer run." }
+      ],
+      "choices": [
+        { "id": "OT5_MENU", "text": "Return to Main Menu.", "to": "MENU" }
+      ]
+    }
+  ]
+}
