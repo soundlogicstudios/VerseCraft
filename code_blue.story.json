@@ -1,0 +1,89 @@
+{
+  "storyId": "code_blue_demo_v2",
+  "title": "Code Blue",
+  "startSectionId": "CB1",
+  "save": {
+    "defaults": {
+      "sectionId": "CB1",
+      "stats": { "W": 2, "E": 2, "A": 2, "L": 2, "T": 2, "H": 2 },
+      "resources": { "HP": 10, "REPUTATION": 0 },
+      "progress": { "level": 1, "xp": 0 },
+      "flags": { "triage_called": false },
+      "inventory": {
+        "consumables": ["healing_salve"],
+        "weapons": ["rusty_dagger"],
+        "armors": ["leather_jerkin"],
+        "specialItems": ["candle"]
+      },
+      "equipped": { "weapon": "rusty_dagger", "armor": "leather_jerkin", "special": "candle" }
+    }
+  },
+  "sections": [
+    {
+      "id": "CB1",
+      "text": [
+        "The pager screams like it has a personal problem with silence.",
+        "The hall smells like antiseptic and adrenaline. Someone shouts: “Triage—now!”",
+        { "__sys": true, "tier": "neutral", "text": "Demo hook: triage decisions. HP changes only when stress or harm is explained." }
+      ],
+      "choices": [
+        { "id": "CB1_RUN", "text": "Run to triage immediately.", "to": "CB2" },
+        { "id": "CB1_BRIEF", "text": "Grab a 10-second brief from the charge nurse.", "to": "CB3" }
+      ]
+    },
+    {
+      "id": "CB2",
+      "text": [
+        "You arrive fast. Too fast.",
+        "The room is already chaos: one patient pale, one patient panicked, and staff trying to do three jobs at once."
+      ],
+      "choices": [
+        { "id": "CB2_CALL", "text": "Call the first clear order and take control.", "to": "CB4" },
+        { "id": "CB2_FREEZE", "text": "Hesitate—just a second too long.", "to": "CB4", "onChoose": [
+          { "op": "APPEND_TEXT", "lines": [{ "__sys": true, "tier": "explicit", "text": "The hesitation costs you—your heart pounds and your hands shake." }] },
+          { "op": "ADD_RESOURCE", "resource": "HP", "amount": -1 },
+          { "op": "APPEND_TEXT", "lines": [{ "__sys": true, "tier": "neutral", "text": "HP -1." }] }
+        ] }
+      ]
+    },
+    {
+      "id": "CB3",
+      "text": [
+        "The charge nurse grabs your sleeve. “Two arrivals. One looks critical. One’s crashing emotionally—watch the room.”",
+        "You feel calmer—not because things are better, but because you understand them."
+      ],
+      "choices": [
+        {
+          "id": "CB3_GO",
+          "text": "Go to triage with the brief.",
+          "to": "CB4",
+          "onChoose": [
+            { "op": "SET_FLAG", "key": "triage_called", "value": true },
+            { "op": "APPEND_TEXT", "lines": [{ "__sys": true, "tier": "whisper", "text": "Clarity helps. You’re less likely to take a penalty here." }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CB4",
+      "text": [
+        "You make the call.",
+        "A staff member looks at you like you just became the person they were waiting for.",
+        { "__sys": true, "tier": "whisper", "text": "Future: reputation choices live here. For now, this is a clean demo beat." }
+      ],
+      "choices": [
+        { "id": "CB4_NEXT", "text": "Finish the shift beat (demo end).", "to": "CB5" }
+      ]
+    },
+    {
+      "id": "CB5",
+      "text": [
+        "The crisis doesn’t end. It just becomes the new normal.",
+        { "__sys": true, "tier": "neutral", "text": "Code Blue demo stub complete. Next: romance/drama branches + reputation economy." }
+      ],
+      "choices": [
+        { "id": "CB5_MENU", "text": "Return to Main Menu.", "to": "MENU" }
+      ]
+    }
+  ]
+}
