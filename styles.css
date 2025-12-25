@@ -526,3 +526,25 @@ button:disabled { opacity: .42; cursor: not-allowed; }
   font-size: 12.5px;
   color: var(--vc-text-main);
 }
+/* --- Centering fix: VerseCraft logo + Lorecraft title/subtitle --- */
+.menu-hero { display: flex; justify-content: center; }
+
+.menu-brand{
+  width: 100%;
+  text-align: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.menu-logo{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  justify-self: center;
+}
+
+.menu-title,
+.menu-subtitle{
+  width: 100%;
+  text-align: center;
+}
