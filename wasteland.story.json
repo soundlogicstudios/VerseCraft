@@ -1,0 +1,180 @@
+{
+  "storyId": "wasteland",
+  "title": "Wasteland",
+  "subtitle": "A Scavenger Survival Demo",
+  "itemSet": "Wasteland Scavenger",
+  "startSectionId": "WL1",
+  "items": [
+    {
+      "id": "Bandage",
+      "title": "Bandage",
+      "slot": "Consumable",
+      "rarity": "Common",
+      "consumeOnUse": true,
+      "values": { "HP": 1, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "A quick wrap to stop the sting."
+    },
+    {
+      "id": "Medkit",
+      "title": "Medkit",
+      "slot": "Consumable",
+      "rarity": "Rare",
+      "consumeOnUse": true,
+      "values": { "HP": 4, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": ["Bleeding"],
+      "description": "Real supplies. Real relief."
+    },
+    {
+      "id": "Clean Water",
+      "title": "Clean Water",
+      "slot": "Consumable",
+      "rarity": "Common",
+      "consumeOnUse": true,
+      "values": { "HP": 1, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": ["Dehydrated"],
+      "description": "A mouthful of survival."
+    },
+    {
+      "id": "Machete",
+      "title": "Machete",
+      "slot": "Weapon",
+      "rarity": "Common",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "Not pretty. Effective."
+    },
+    {
+      "id": "Scrap Vest",
+      "title": "Scrap Vest",
+      "slot": "Armor",
+      "rarity": "Uncommon",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "Metal plates and bad decisions."
+    },
+    {
+      "id": "Flashlight",
+      "title": "Flashlight",
+      "slot": "Special",
+      "rarity": "Essential",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "Darkness loses when you remember to look."
+    },
+    {
+      "id": "Lockpick",
+      "title": "Lockpick",
+      "slot": "Special",
+      "rarity": "Uncommon",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 1 },
+      "flagsSet": [],
+      "flagsClear": [],
+      "description": "A quiet yes to doors that say no."
+    },
+    {
+      "id": "Map Fragment",
+      "title": "Map Fragment",
+      "slot": "Special",
+      "rarity": "Artifact",
+      "consumeOnUse": false,
+      "values": { "HP": 0, "Reputation": 0, "Timing": 0 },
+      "flagsSet": ["Has Map Fragment"],
+      "flagsClear": [],
+      "description": "A torn corner of a way out."
+    }
+  ],
+  "save": {
+    "defaults": {
+      "sectionId": "WL1",
+      "stats": { "W": 2, "E": 2, "A": 2, "L": 2, "T": 2, "H": 2 },
+      "resources": { "HP": 10, "MAX_HP": 10, "REPUTATION": 0, "TIMING": 0 },
+      "progress": { "level": 1, "xp": 0 },
+      "flags": {},
+      "inventory": {
+        "consumables": ["Bandage", "Clean Water"],
+        "weapons": ["Machete"],
+        "armors": ["Scrap Vest"],
+        "specialItems": ["Flashlight", "Lockpick"]
+      },
+      "equipped": { "weapon": "Machete", "armor": "Scrap Vest", "special": "Flashlight" }
+    }
+  },
+  "sections": [
+    {
+      "id": "WL1",
+      "text": [
+        "Wind scrapes the world down to bone. Somewhere ahead, a door hangs open like a dare.",
+        { "__sys": true, "tier": "neutral", "text": "Placeholder Demo: This file exists so the story loads from the library. Item use/equip works." }
+      ],
+      "choices": [
+        { "id": "WL1A", "text": "Enter the ruined store.", "to": "WL2" },
+        { "id": "WL1B", "text": "Check your gear first.", "to": "WL3" }
+      ]
+    },
+    {
+      "id": "WL2",
+      "text": [
+        "Inside: dust, shadows, and a soft clicking sound you can’t place.",
+        { "__sys": true, "tier": "hint", "text": "If your HP is low, try using Bandage or Clean Water from Inventory." }
+      ],
+      "choices": [
+        { "id": "WL2A", "text": "Move slowly. Listen.", "to": "WL4" },
+        { "id": "WL2B", "text": "Move fast. Grab anything useful.", "to": "WL5" }
+      ]
+    },
+    {
+      "id": "WL3",
+      "text": [
+        "Your hands check familiar shapes: a Machete, a Scrap Vest, and the Flashlight’s cold grip."
+      ],
+      "choices": [
+        { "id": "WL3A", "text": "Go in.", "to": "WL2" },
+        { "id": "WL3B", "text": "Return to Main Menu.", "to": "MENU" }
+      ]
+    },
+    {
+      "id": "WL4",
+      "text": [
+        "In the back aisle you find a torn page: a Map Fragment.",
+        { "__sys": true, "tier": "neutral", "text": "You gain: Map Fragment." }
+      ],
+      "choices": [
+        { "id": "WL4A", "text": "Pocket it and leave.", "to": "WL6" }
+      ]
+    },
+    {
+      "id": "WL5",
+      "text": [
+        "A board snaps. Pain lances your foot.",
+        { "__sys": true, "tier": "neutral", "text": "HP -1 (placeholder consequence)." }
+      ],
+      "effects": { "resourcesDelta": { "HP": -1 } },
+      "choices": [
+        { "id": "WL5A", "text": "Keep going anyway.", "to": "WL6" },
+        { "id": "WL5B", "text": "Stop and treat it (use Bandage).", "to": "WL6" }
+      ]
+    },
+    {
+      "id": "WL6",
+      "text": [
+        "Outside again, the sky is the same color as old bruises.",
+        { "__sys": true, "tier": "neutral", "text": "Placeholder ending. Full Wasteland comes next." }
+      ],
+      "choices": [
+        { "id": "WL6A", "text": "Return to Main Menu.", "to": "MENU" },
+        { "id": "WL6B", "text": "Restart Wasteland.", "to": "WL1" }
+      ]
+    }
+  ]
+}
