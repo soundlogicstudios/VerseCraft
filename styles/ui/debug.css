@@ -1,7 +1,35 @@
-/* Debug outlines toggled via body.debug */
+/* ==============================
+   VerseCraft Debug v2
+   ============================== */
+
 body.debug .hitbox{
-  outline: 2px dashed var(--outline);
+  outline: 2px dashed cyan;
   outline-offset: -2px;
+  position: relative;
+}
+
+body.debug .hitbox::after{
+  content: attr(id);
+  position: absolute;
+  top: -14px;
+  left: 0;
+  font-size: 10px;
+  background: rgba(0,0,0,.75);
+  color: #0ff;
+  padding: 1px 4px;
+  pointer-events: none;
+}
+
+body.debug #tosScroll{
+  outline: 2px solid lime;
+}
+
+body.debug #tosText{
+  outline: 1px dashed yellow;
+}
+
+body.debug .screen{
+  outline: 1px solid rgba(255,0,255,.25);
 }
 
 body.debug .footer{
