@@ -24,7 +24,13 @@ function boot() {
 
   bindHitboxes({
     // Splash
-    hbSplashTap: () => go("tos"),
+    hbSplashTap: () => {
+  const tosText = document.getElementById("tosText");
+  if (tosText && tosText.innerHTML.trim() === "") {
+    tosText.innerHTML = TERMS_OF_SERVICE_TEXT;
+  }
+  go("tos");
+},
 
     // Terms of Service
     hbTosAccept: () => go("menu"),
