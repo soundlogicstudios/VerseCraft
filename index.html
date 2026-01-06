@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>VerseCraft</title>
+
+  <!-- Core styles -->
+  <link rel="stylesheet" href="./styles/base.css?v=0.0.02" />
+  <link rel="stylesheet" href="./styles/ui/hitboxes.css?v=0.0.02" />
+  <link rel="stylesheet" href="./styles/ui/debug.css?v=0.0.02" />
+
+  <!-- Screen styles (start empty; we’ll add later) -->
+  <link rel="stylesheet" href="./styles/screens/menu.css?v=0.0.01" />
+  <link rel="stylesheet" href="./styles/screens/settings.css?v=0.0.01" />
+  <link rel="stylesheet" href="./styles/screens/library.css?v=0.0.01" />
+  <link rel="stylesheet" href="./styles/screens/story.css?v=0.0.01" />
+</head>
+<body>
+  <div id="app">
+    <main id="screens" class="screens">
+
+      <!-- SPLASH (Tap To Start) -->
+      <section id="screen-splash" class="screen" data-screen="splash" aria-label="Splash">
+        <!-- NOTE: This path is intentionally set to the canonical repo location you identified. -->
+        <img class="screen-bg" src="./src/global/versecraft-ui/global-backgrounds/1st-screen-tap-to-start.PNG" alt="Tap To Start Background" />
+
+        <!-- Tap hitbox (trained location; NOT full-screen) -->
+        <button id="hbSplashTap" class="hitbox" type="button" aria-label="Tap to Start"></button>
+
+        <!-- Optional overlay plate + system text (no baked text). Asset can be placed at the path below. -->
+        <div class="splash-plate" aria-hidden="true">
+          <img class="splash-plate-img" src="./src/global/versecraft-ui/global-overlays/tap_to_start_plate.png" alt="" />
+          <div id="splashPlateText" class="splash-plate-text">Tap To Start</div>
+        </div>
+      </section>
+
+      <!-- TERMS OF SERVICE -->
+      <section id="screen-tos" class="screen" data-screen="tos" aria-label="Terms of Service" style="position:relative;">
+        
+        <img class="screen-bg" src="./backgrounds/ui/global/empty-balanced-astral-gold-big.PNG?v=0.0.07" alt="Terms of Service Background" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block;" />
+<!-- Blank background: rendered by CSS (or left as default) so this stays system-driven. -->
+        <div class="tos-shell" style="position:relative;z-index:1;background:transparent;">
+          <div class="tos-header">
+            <div id="tosTitle" class="tos-title">Terms of Service</div>
+          </div>
+
+          <!-- Scroll container: same tech pattern as narrative panels (system-generated text) -->
+          <div id="tosScroll" class="tos-scroll" role="region" aria-label="Terms of Service Text">
+            <div id="tosText" class="tos-text">
+              <!-- System will inject Terms of Service content here. -->
+            </div>
+          </div>
+
+          <!-- Accept/Continue hitbox (trained location) -->
+          <button id="hbTosAccept" class="hitbox" type="button" aria-label="Accept Terms and Continue"></button>
+        </div>
+      </section>
+
+
+      <!-- MENU -->
+      <section id="screen-menu" class="screen active" data-screen="menu" aria-label="Menu">
+        <img class="screen-bg" src="./backgrounds/ui/global/main-menu-no-save.webp?v=0.0.02" alt="Menu Background" />
+        <button id="hbMenuLoad" class="hitbox" type="button" aria-label="Load New Story"></button>
+        <button id="hbMenuSettings" class="hitbox" type="button" aria-label="Settings"></button>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="screen-settings" class="screen" data-screen="settings" aria-label="Settings">
+        <img class="screen-bg" src="./backgrounds/ui/global/settings.webp?v=0.0.02" alt="Settings Background" />
+        <button id="hbSettingsBack" class="hitbox" type="button" aria-label="Back to Menu"></button>
+        <button id="hbSettingsClear" class="hitbox" type="button" aria-label="Clear Save"></button>
+        <button id="hbSettingsTheme" class="hitbox" type="button" aria-label="Theme"></button>
+      </section>
+
+      <!-- LIBRARY -->
+      <section id="screen-library" class="screen" data-screen="library" aria-label="Library">
+        <img class="screen-bg" src="./backgrounds/ui/global/library.webp?v=0.0.02" alt="Library Background" />
+        <button id="hbLibraryMenu" class="hitbox" type="button" aria-label="Back to Menu"></button>
+        <button id="hbLibraryStore" class="hitbox" type="button" aria-label="Store"></button>
+
+        <!-- 3 default rows (hitboxes only; art is baked into background) -->
+        <button id="hbRow0" class="hitbox" type="button" aria-label="Row 1"></button>
+        <button id="hbRow1" class="hitbox" type="button" aria-label="Row 2"></button>
+        <button id="hbRow2" class="hitbox" type="button" aria-label="Row 3"></button>
+      </section>
+
+      <!-- STORY (placeholder panel) -->
+      <section id="screen-story" class="screen" data-screen="story" aria-label="Story">
+        <div class="story-shell">
+          <div class="story-top">
+            <button id="hbStoryBack" class="story-back" type="button">Back</button>
+            <div id="storyTitle" class="story-title">Story</div>
+          </div>
+          <div id="storyText" class="story-text">
+            Story panel placeholder. Next step is wiring story rendering here.
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer" id="footer">
+      VerseCraft v0.0.01
+      <span class="footer-spacer">•</span>
+      <button id="btnDebug" class="footer-btn" type="button" aria-label="Toggle Debug">Debug</button>
+    </footer>
+  </div>
+
+  <script type="module" src="./src/app.js?v=0.0.01"></script>
+</body>
+</html>

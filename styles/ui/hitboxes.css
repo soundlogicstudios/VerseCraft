@@ -1,0 +1,197 @@
+/* VerseCraft Hitboxes v0.0.02
+   Invisible touch targets aligned to pre-rendered art.
+   All positions are percentages for device safety.
+*/
+
+/* Base hitbox */
+.hitbox{
+  position: absolute;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  pointer-events: auto;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+
+/* =========================
+   SPLASH SCREEN HITBOXES
+   ========================= */
+
+/* Tap To Start (trained location at the bottom plate) */
+#hbSplashTap{
+  left: 18%;
+  width: 64%;
+  height: 10%;
+  top: auto;
+  bottom: 12%;
+}
+
+/* =========================
+   TERMS OF SERVICE HITBOXES
+   ========================= */
+
+/* Accept / Continue (trained location at the bottom) */
+#hbTosAccept{
+  left: 20%;
+  width: 60%;
+  height: 9%;
+  top: auto;
+  bottom: 6%;
+}
+
+/* =========================
+   MENU SCREEN HITBOXES
+   ========================= */
+
+/* Load New Story */
+#hbMenuLoad{
+  left: 10%;
+  top: 46%;
+  width: 80%;
+  height: 8%;
+}
+
+/* Settings */
+#hbMenuSettings{
+  left: 10%;
+  top: 60%;
+  width: 80%;
+  height: 8%;
+}
+
+/* =========================
+   SETTINGS SCREEN HITBOXES
+   ========================= */
+
+/* Back / Menu */
+#hbSettingsBack{
+  left: 8%;
+  top: 18%;
+  width: 40%;
+  height: 8%;
+}
+
+/* Clear Save */
+#hbSettingsClear{
+  left: 8%;
+  top: 30%;
+  width: 84%;
+  height: 8%;
+}
+
+/* Theme */
+#hbSettingsTheme{
+  left: 8%;
+  top: 80%;
+  width: 84%;
+  height: 6%;
+}
+
+/* =========================
+   LIBRARY SCREEN HITBOXES
+   ========================= */
+
+/* Back to Menu */
+#hbLibraryMenu{
+  left: 2%;
+  top: 5%;
+  width: 34%;
+  height: 8%;
+}
+
+/* Store */
+#hbLibraryStore{
+  right: 2%;
+  top: 5%;
+  width: 34%;
+  height: 8%;
+}
+
+/* Library Rows (3 visible rows by default) */
+#hbRow0{
+  left: 7%;
+  top: 24%;
+  width: 86%;
+  height: 18%;
+}
+
+#hbRow1{
+  left: 7%;
+  top: 46%;
+  width: 86%;
+  height: 18%;
+}
+
+#hbRow2{
+  left: 7%;
+  top: 68%;
+  width: 86%;
+  height: 18%;
+}
+
+/* ============================================================================
+   VerseCraft v0.0.02 — HITBOX LOCK PASS (Splash + ToS)
+   Goal: hitboxes are permanent; art can swap later without moving hit targets.
+   Only targets:
+     - #hbSplashTap  (Splash: Tap-to-start plate)
+     - #hbTosAccept  (ToS: Accept/Continue area)
+   ========================================================================== */
+
+#hbSplashTap, #hbTosAccept {
+  position: absolute;
+  z-index: 9999;
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Tuning knobs (adjust ONCE, then lock) */
+:root {
+  --vc-splash-tap-width: min(86vw, 720px);
+  --vc-splash-tap-height: 110px;
+  --vc-splash-tap-bottom: calc(env(safe-area-inset-bottom) + 54px);
+
+  --vc-tos-accept-width: min(86vw, 720px);
+  --vc-tos-accept-height: 110px;
+  --vc-tos-accept-top: 250px;
+  --vc-tos-accept-bottom: auto;
+}
+
+/* Splash: Tap-to-start (trained location) */
+#screen-splash #hbSplashTap {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: var(--vc-splash-tap-bottom);
+  width: var(--vc-splash-tap-width);
+  height: var(--vc-splash-tap-height);
+}
+
+/* Terms of Service: Accept/Continue (trained location) */
+#screen-tos #hbTosAccept {
+  left: 50%;
+  transform: translateX(-50%);
+  top: var(--vc-tos-accept-top);
+  bottom: auto !important;
+  width: var(--vc-tos-accept-width);
+  height: var(--vc-tos-accept-height);
+}
+
+/* Keep ToS content above background; hitbox remains above content */
+#screen-tos .tos-shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional visual aid if you add `.debug-hitboxes` to <body> */
+.debug-hitboxes #hbSplashTap,
+.debug-hitboxes #hbTosAccept {
+  outline: 2px dashed rgba(0, 200, 200, 0.9);
+  outline-offset: 2px;
+}

@@ -1,0 +1,109 @@
+/* VerseCraft Starter v0.0.02
+   ART-first, panel-by-panel, iOS Safari-safe baseline
+*/
+
+:root{
+  --bg: #0b0b10;
+  --fg: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.65);
+  --outline: rgba(0,255,255,.65);
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  /* No page scroll. Panels are fixed. */
+  overflow: hidden;
+  overscroll-behavior: none;
+
+  background: var(--bg);
+  color: var(--fg);
+
+  /* Touch-first */
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
+#app{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.screens{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.screen{
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+}
+
+.screen.active{ display: block; }
+
+.screen-bg{
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+
+  /* Pre-rendered art should fill the panel */
+  object-fit: cover;
+
+  /* Art never intercepts taps */
+  pointer-events: none;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Footer (simple, optional) */
+.footer{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 10px 12px;
+
+  font: 600 12px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--muted);
+
+  background: rgba(0,0,0,.25);
+  backdrop-filter: blur(6px);
+}
+
+.footer-spacer{
+  margin: 0 8px;
+  opacity: .6;
+}
+
+.footer-btn{
+  font: inherit;
+  color: var(--fg);
+
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.20);
+  border-radius: 10px;
+
+  padding: 6px 10px;
+}
+
+
+/* Splash overlays should never intercept taps */
+.splash-plate,
+.splash-plate *{
+  pointer-events: none;
+}
