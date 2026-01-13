@@ -1,0 +1,141 @@
+/* =========================================================
+   VerseCraft — hitboxes.css (RESTORED / CANONICAL)
+   ========================================================= */
+
+/* Base hitbox reset */
+.hitbox{
+  position: absolute;
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 9999;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  touch-action: manipulation;
+}
+
+/* Debug visualization (only when body.debug is present) */
+body.debug .hitbox{
+  outline: 2px dashed rgba(0, 200, 200, 0.9);
+  outline-offset: -2px;
+  background: rgba(255, 0, 0, 0.15);
+}
+
+/* =========================================================
+   SPLASH — Tap To Start (LOCKED)
+   ========================================================= */
+#hbSplashTap{
+  left: 21.33%;
+  top: 81.83%;
+  width: 59.20%;
+  height: 5.90%;
+}
+
+/* TERMS OF SERVICE */
+#hbTosAccept{
+  left: 26.83%;
+  top: 81.11%;
+  width: 39.4%;
+  height: 7.15%;
+}
+
+/* MENU */
+#hbMenuLoad{ left: 9%; top: 41%; width: 80%; height: 8%; }
+#hbMenuSettings{ left: 10%; top: 63%; width: 80%; height: 8%; }
+
+/* SETTINGS */
+#hbSettingsBack{ left: 25.75%; top: 44.05%; width: 50.20%; height: 5.90%; }
+#hbSettingsClear{ left: 19.86%; top: 54.07%; width: 60%; height: 6.72%; }
+#hbSettingsTheme{ left: 16.93%; top: 74.6%; width: 67.47%; height: 7.34%; }
+
+/* LIBRARY */
+#hbLibraryMenu{ left: 4.93%; top: 7.64%; width: 25.2%; height: 4.74%; }
+#hbLibraryStore{ left: 31.73%; top: 89.78%; width: 39.33%; height: 4.12%; }
+#hbLibrary2Store{ left: 31.47%; top: 90.86%; width: 39.33%; height: 4.12%; }
+#hbLibraryNext{ left: 69.73%; top: 7.17%; width: 25.2%; height: 4.74%; }
+#hbLibrary2Back{ left: 2.8%; top: 7.33%; width: 25.2%; height: 4.74%; }
+#hbLibraryMoreSoon{ left: 72.8%; top: 7.32%; width: 20.93%; height: 5.67%; }
+
+/* Library rows */
+#hbRow0{ left: 10.98%; top: 17.31%; width: 77.47%; height: 16.13%; }
+#hbRow1{ left: 10.66%; top: 36.36%; width: 79.06%; height: 16.28%; }
+#hbRow2{ left: 10.46%; top: 55.72%; width: 78.8%; height: 16.44%; }
+#hbRow3{ left: 10.93%; top: 74.97%; width: 79.73%; height: 14.64%; }
+
+#hbRow4{ left: 11.78%; top: 17.47%; width: 76.13%; height: 15.05%; }
+#hbRow5{ left: 11.73%; top: 36.67%; width: 75.87%; height: 13.49%; }
+#hbRow6{ left: 11.53%; top: 53.39%; width: 76.4%; height: 13.49%; }
+#hbRow7{ left: 11.73%; top: 70.47%; width: 74.93%; height: 14.79%; }
+
+/* STORY */
+#hbStoryBack{
+  left: 3.07%;
+  top: 24.25%;
+  width: 34%;
+  height: 8%;
+}
+
+/* =========================================================
+   LAUNCHER — placeholders until measured
+   You can calibrate later with your hitbox editor.
+   ========================================================= */
+#hbLauncherBack{
+  left: 2.8%;
+  top: 7.33%;
+  width: 25.2%;
+  height: 4.74%;
+}
+
+#hbLauncherStart{
+  left: 30.53%;
+  top: 76.66%;
+  width: 41.07%;
+  height: 8.06%;
+}
+
+#hbLauncherContinue{
+  left: 14%;
+  top: 91.0%;
+  width: 72%;
+  height: 6.2%;
+}
+
+/* Continue disabled state */
+#hbLauncherContinue[data-disabled="true"]{
+  pointer-events: none !important;
+}
+
+
+
+/* =========================================================
+   LIBRARY — Row Title Overlays (non-interactive)
+   Future-proof: titles populated from manifest
+   ========================================================= */
+.libraryRowLabel{
+  position: absolute;
+  left: 14%;
+  width: 72%;
+  text-align: center;
+  font: 800 20px/1.25 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  pointer-events: none;
+}
+
+#libLabel0{ top: 25.38%; }
+#libLabel1{ top: 44.50%; }
+#libLabel2{ top: 63.94%; }
+#libLabel3{ top: 82.29%; }
+
+#libLabel4{ top: 24.99%; }
+#libLabel5{ top: 43.42%; }
+#libLabel6{ top: 60.14%; }
+#libLabel7{ top: 77.87%; }
+
+
+/* HARD RULE: hitboxes only exist on the active screen */
+.screen:not(.active) .hitbox{
+  display: none !important;
+  pointer-events: none !important;
+}

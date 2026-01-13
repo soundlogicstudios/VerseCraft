@@ -1,0 +1,24 @@
+{
+  "id": "crimson_seagull",
+  "title": "Crimson Seagull",
+  "subtitle": "Blood and Brine",
+
+  "packId": "founders",
+  "blurb": "A pirate legend soaked in salt, steel, and betrayal. The sea remembers everything.",
+
+  "assets": {
+    "cover": "content/packs/founders/covers/crimson-seagull.webp"
+  },
+
+  "start": "S01",
+
+  "sections": [
+    {
+      "id": "S01",
+      "text": "The deck creaks beneath your boots as the ship cuts through black water.",
+      "choices": [
+        { "label": "Scan the horizon", "to": "S02" }
+      ]
+    }
+  ]
+}

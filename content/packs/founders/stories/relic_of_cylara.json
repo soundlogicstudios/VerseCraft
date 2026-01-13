@@ -1,0 +1,24 @@
+{
+  "id": "relic_of_cylara",
+  "title": "Relic of Cylara",
+  "subtitle": "The Tower Remembers",
+
+  "packId": "founders",
+  "blurb": "An ancient tower. A forgotten relic. And truths buried beneath centuries of silence.",
+
+  "assets": {
+    "cover": "content/packs/founders/covers/relic-of-cylara.webp"
+  },
+
+  "start": "S01",
+
+  "sections": [
+    {
+      "id": "S01",
+      "text": "The tower rises above the valley, untouched by time.",
+      "choices": [
+        { "label": "Enter the tower", "to": "S02" }
+      ]
+    }
+  ]
+}

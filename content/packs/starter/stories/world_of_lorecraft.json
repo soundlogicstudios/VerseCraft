@@ -1,0 +1,909 @@
+{
+  "id": "world_of_lorecraft",
+  "title": "Lorecraft Tutorial",
+  "subtitle": "The World That Notices",
+  "start": "S01",
+  "module": {
+    "primaryResource": {
+      "name": "HP",
+      "min": 0,
+      "max": 15,
+      "failureSectionId": "DEATH"
+    },
+    "slotLabels": {
+      "weapon": "Weapon",
+      "armor": "Armor",
+      "special": "Special Item"
+    },
+    "loadout": {
+      "weapon": {
+        "id": "rusty_dagger",
+        "name": "Rusty Dagger",
+        "category": "weapons"
+      },
+      "armor": {
+        "id": "traveler_cloak",
+        "name": "Traveler Cloak",
+        "category": "armor"
+      },
+      "special": {
+        "id": "candle_stub",
+        "name": "Candle",
+        "category": "special"
+      }
+    },
+    "itemCatalog": {
+      "consumables": [
+        {
+          "id": "bandage",
+          "name": "Bandage",
+          "value": 15,
+          "use": {
+            "type": "heal",
+            "amount": 3
+          }
+        },
+        {
+          "id": "herb_poultice",
+          "name": "Herb Poultice",
+          "value": 25,
+          "use": {
+            "type": "heal",
+            "amount": 4
+          }
+        },
+        {
+          "id": "glimmer_tonic",
+          "name": "Glimmer Tonic",
+          "value": 45,
+          "use": {
+            "type": "heal",
+            "amount": 5
+          }
+        },
+        {
+          "id": "antitoxin_draught",
+          "name": "Antitoxin Draught",
+          "value": 35,
+          "use": {
+            "type": "story",
+            "tag": "CuredPoison"
+          }
+        }
+      ],
+      "items": [
+        {
+          "id": "chalk",
+          "name": "Chalk",
+          "value": 5,
+          "use": {
+            "type": "story",
+            "tag": "MarkedTrail"
+          }
+        },
+        {
+          "id": "candle_resin",
+          "name": "Candle Resin",
+          "value": 10,
+          "use": {
+            "type": "story",
+            "tag": "BrightCandle"
+          }
+        },
+        {
+          "id": "iron_key",
+          "name": "Iron Key",
+          "value": 20,
+          "use": {
+            "type": "story",
+            "tag": "HasKey"
+          }
+        },
+        {
+          "id": "wax_token",
+          "name": "Wax Token",
+          "value": 60,
+          "use": {
+            "type": "story",
+            "tag": "HasWaxToken"
+          }
+        }
+      ],
+      "weapons": [
+        {
+          "id": "rusty_dagger",
+          "name": "Rusty Dagger",
+          "value": 10,
+          "equipSlot": "weapon"
+        },
+        {
+          "id": "warden_knife",
+          "name": "Warden Knife",
+          "value": 60,
+          "equipSlot": "weapon"
+        },
+        {
+          "id": "cold_iron_dirk",
+          "name": "Cold Iron Dirk",
+          "value": 85,
+          "equipSlot": "weapon"
+        }
+      ],
+      "armor": [
+        {
+          "id": "traveler_cloak",
+          "name": "Traveler Cloak",
+          "value": 10,
+          "equipSlot": "armor"
+        },
+        {
+          "id": "battered_buckler",
+          "name": "Battered Buckler",
+          "value": 35,
+          "equipSlot": "armor"
+        },
+        {
+          "id": "warden_vambrace",
+          "name": "Warden Vambrace",
+          "value": 75,
+          "equipSlot": "armor"
+        }
+      ],
+      "special": [
+        {
+          "id": "candle_stub",
+          "name": "Candle",
+          "value": 5,
+          "equipSlot": "special"
+        },
+        {
+          "id": "warden_sigil",
+          "name": "Warden Sigil",
+          "value": 100,
+          "equipSlot": "special"
+        },
+        {
+          "id": "lens_of_embers",
+          "name": "Lens Of Embers",
+          "value": 120,
+          "equipSlot": "special"
+        }
+      ]
+    },
+    "notes": [
+      "Lorecraft reference module: rich narrative, inventory-driven progression, and stateful revisits.",
+      "Conditional choices must remain diegetic; item names only appear when the player already has them.",
+      "Choice.requires supports flag, notFlag, hasItem."
+    ]
+  },
+  "sections": [
+    {
+      "id": "S01",
+      "text": "Moonlight breaks on shattered stone. The ruin’s entrance yawns like a cracked jaw, its archway half-swallowed by ivy and time.\n\nYou didn’t come here for glory. You came because the local road has gone quiet—and because something in the dark has started paying attention.\n\nA wind sighs from within, carrying cold air and the faint smell of old metal.",
+      "system": "Tutorial: Your choices move the story. Consequences can change HP, inventory, and flags.",
+      "choices": [
+        {
+          "label": "Step into the ruin",
+          "to": "S02"
+        },
+        {
+          "label": "Circle the entrance and scout for danger",
+          "to": "S03",
+          "effects": {
+            "xp": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "text": "You cross the threshold.\n\nDust puffs under your boots. A corridor stretches forward—collapsed in places, but passable. Your candle’s flame steadies in the stale air, illuminating carvings worn smooth by centuries.\n\nSomewhere deeper, water drips… then stops, as if something listened.",
+      "system": "Your candlelight is steady. The ruin watches what you do with it.",
+      "choices": [
+        {
+          "label": "Take the corridor straight ahead",
+          "to": "S04",
+          "effects": [
+            {
+              "setFlag": "EnteredRuin"
+            },
+            {
+              "xp": 1
+            },
+            {
+              "removeItem": {
+                "category": "special",
+                "id": "candle_stub",
+                "qty": 1
+              }
+            }
+          ]
+        },
+        {
+          "label": "Move slowly—watch the floor for traps",
+          "to": "S05",
+          "effects": [
+            {
+              "setFlag": "CarefulStep"
+            },
+            {
+              "xp": 2
+            },
+            {
+              "removeItem": {
+                "category": "special",
+                "id": "candle_stub",
+                "qty": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "text": "You circle the archway. The stone here is newer—repairs made long after the ruin fell. Whoever patched it up didn’t do it to keep people out.\n\nYou find scuffed footprints in the dirt. Fresh. Not yours.\n\nA tightness creeps into your chest. You’re being sloppy if you pretend you’re alone.",
+      "system": "The world leaves evidence. If you look for it, it looks back.",
+      "choices": [
+        {
+          "label": "Enter the ruin with your guard up",
+          "to": "S02"
+        },
+        {
+          "label": "Follow the footprints into a side gap in the stone",
+          "to": "S06"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "text": "The corridor narrows. Your candlelight catches a thin wire—too late.\n\nA stone plate snaps under your weight. A dart hisses from the wall and bites your shoulder.\n\nPain blooms hot, then cold.",
+      "system": "HP -3. You’re hurt. If you have a Bandage, check Inventory → Consumables to patch yourself up.",
+      "choices": [
+        {
+          "label": "Rip the dart free and keep moving",
+          "to": "S07",
+          "effects": {
+            "hp": -3,
+            "xp": 2
+          }
+        },
+        {
+          "label": "Stop and apply a bandage",
+          "to": "S08",
+          "requires": {
+            "hasItem": {
+              "category": "consumables",
+              "id": "bandage"
+            }
+          },
+          "effects": [
+            {
+              "hp": -3
+            },
+            {
+              "removeItem": {
+                "category": "consumables",
+                "id": "bandage",
+                "qty": 1
+              }
+            },
+            {
+              "hp": 3
+            },
+            {
+              "xp": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "text": "You advance with your weight on your back foot, eyes tracking the seams between stones.\n\nA wire gleams faintly—trap. You step over it carefully.\n\nThe ruin feels… aware. Like the air itself is waiting to see what you’ll do next.",
+      "system": "You avoided a penalty. Caution is an outcome, too.",
+      "choices": [
+        {
+          "label": "Continue deeper",
+          "to": "S07",
+          "effects": {
+            "xp": 2
+          }
+        },
+        {
+          "label": "Follow a side door marked with a faded sigil",
+          "to": "S09"
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "text": "You slip through a gap where the wall has crumbled. The air smells of damp stone and old rot.\n\nA small cache lies hidden beneath a loose slab—someone’s emergency stash.\n\nInside: a wrapped packet of herbs (useful), and a battered buckler that still holds its shape.",
+      "system": "Loot matters. If you take it, you can later use it from Inventory.",
+      "choices": [
+        {
+          "label": "Take the herbs and buckler",
+          "to": "S07",
+          "effects": [
+            {
+              "addItem": {
+                "category": "consumables",
+                "id": "herb_poultice",
+                "name": "Herb Poultice",
+                "qty": 1,
+                "value": 20,
+                "use": {
+                  "type": "heal",
+                  "amount": 4
+                }
+              }
+            },
+            {
+              "addItem": {
+                "category": "armor",
+                "id": "battered_buckler",
+                "name": "Battered Buckler",
+                "qty": 1,
+                "value": 35,
+                "equipSlot": "armor"
+              }
+            },
+            {
+              "xp": 3
+            }
+          ]
+        },
+        {
+          "label": "Leave it—move quietly back toward the entrance",
+          "to": "S02",
+          "effects": {
+            "xp": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "text": "You push on. The corridor opens into a fractured hall—pillars broken, mosaics smashed, and a dark pool at the center like spilled ink.\n\nYour candlelight doesn’t reach the far corners.\n\nThen you hear it: a slow scrape of something heavy dragged across stone.",
+      "system": "If you’re carrying tools, this is where they start to matter.",
+      "choices": [
+        {
+          "label": "Hide behind a broken pillar",
+          "to": "S10",
+          "effects": {
+            "xp": 2
+          }
+        },
+        {
+          "label": "Approach the sound with weapon ready",
+          "to": "S11",
+          "effects": {
+            "xp": 2
+          }
+        },
+        {
+          "label": "Back away toward the corridor and reassess",
+          "to": "S12",
+          "effects": {
+            "xp": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "text": "You press cloth and pressure to the wound. Your breath steadies.\n\nThe pain dulls to a warning. Not gone—just managed.\n\nYou move again, a little wiser about where you place your feet.",
+      "system": "Bandage used. Healing cannot exceed Max HP. For future healing, open Inventory → Consumables and use what you find.",
+      "choices": [
+        {
+          "label": "Continue into the hall",
+          "to": "S07"
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "text": "The side door groans as you pull it open.\n\nInside is a narrow chapel—collapsed roof, shattered altar, and a single iron reliquary still intact.\n\nSomething about it makes your candle flame lean toward it.",
+      "system": "The reliquary responds to firelight. If you’re holding a Candle, check your Character → Loadout (Special Item).",
+      "choices": [
+        {
+          "label": "Raise your candle and examine the reliquary",
+          "to": "S13",
+          "requires": {
+            "hasItem": {
+              "category": "special",
+              "id": "candle_stub"
+            }
+          },
+          "effects": [
+            {
+              "setFlag": "CandleMoment"
+            },
+            {
+              "xp": 3
+            }
+          ]
+        },
+        {
+          "label": "Leave the chapel before something notices you",
+          "to": "S07"
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "text": "You tuck yourself behind a pillar, still as stone.\n\nA shape slides into view: a cave-wight—thin limbs, wet-looking skin, eyes like pale coins.\n\nIt sniffs the air. Your pulse thunders in your ears.",
+      "choices": [
+        {
+          "label": "Hold your breath and wait for it to pass",
+          "to": "S14",
+          "effects": {
+            "xp": 2
+          }
+        },
+        {
+          "label": "Strike while it’s searching",
+          "to": "S11"
+        }
+      ]
+    },
+    {
+      "id": "S11",
+      "text": "You step forward. The wight turns.\n\nIt moves faster than it looks like it should—skittering, claws clicking.\n\nInstinct pulls you to your dagger.\n\nThis fight is not meant to be fair. It’s meant to teach you consequences.",
+      "choices": [
+        {
+          "label": "Slash with your Rusty Dagger",
+          "to": "S15",
+          "requires": {
+            "hasItem": {
+              "category": "weapons",
+              "id": "rusty_dagger"
+            }
+          },
+          "effects": [
+            {
+              "xp": 2
+            }
+          ]
+        },
+        {
+          "label": "Try to shove it back and run",
+          "to": "S16",
+          "effects": [
+            {
+              "hp": -2
+            },
+            {
+              "xp": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "text": "You retreat to the corridor mouth. The hall stays quiet for a heartbeat…\n\nThen something breathes—wet and patient—just beyond the candle’s reach.\n\nYou can feel the ruin paying attention now. Like it’s weighing you.",
+      "choices": [
+        {
+          "label": "Return to the hall and face whatever is there",
+          "to": "S11"
+        },
+        {
+          "label": "Take the side door you ignored earlier",
+          "to": "S09"
+        }
+      ]
+    },
+    {
+      "id": "S13",
+      "text": "You lift the candle. The flame brightens—unnaturally steady.\n\nThe reliquary’s latch clicks on its own.\n\nInside rests a small charm etched with looping runes: a Warden Sigil.\n\nIt’s not powerful. It’s a promise. Something that says: you were here, and the ruin knows it.",
+      "system": "Special interaction: CandleMoment flag set.",
+      "choices": [
+        {
+          "label": "Take the Warden Sigil",
+          "to": "S17",
+          "effects": [
+            {
+              "addItem": {
+                "category": "special",
+                "id": "warden_sigil",
+                "name": "Warden Sigil",
+                "qty": 1,
+                "value": 80,
+                "equipSlot": "special"
+              }
+            },
+            {
+              "xp": 5
+            }
+          ]
+        },
+        {
+          "label": "Close the reliquary and back away",
+          "to": "S07",
+          "effects": {
+            "xp": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "S14",
+      "text": "The wight’s head tilts. For a terrifying moment, you’re sure it can hear you.\n\nThen it crawls away toward the dark pool.\n\nYou exhale slowly.\n\nA clever survivor doesn’t win fights. They avoid them.",
+      "choices": [
+        {
+          "label": "Slip toward the chapel door",
+          "to": "S09"
+        },
+        {
+          "label": "Follow the wight at a distance",
+          "to": "S18"
+        }
+      ]
+    },
+    {
+      "id": "S15",
+      "text": "Steel bites.\n\nYour dagger catches the wight across the ribs. It shrieks—an awful, thin sound.\n\nBut it rakes your arm as it recoils. Pain lances bright.\n\nYou can win this, but it will cost you.",
+      "system": "HP -4. This is survivable, but dangerous.",
+      "choices": [
+        {
+          "label": "Press the attack",
+          "to": "S19",
+          "effects": [
+            {
+              "hp": -4
+            },
+            {
+              "xp": 4
+            }
+          ]
+        },
+        {
+          "label": "Fall back and use the environment",
+          "to": "S20",
+          "effects": [
+            {
+              "hp": -4
+            },
+            {
+              "xp": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S16",
+      "text": "You shove the creature, but it clings like a burr. It drags claws along your side as you bolt.\n\nYour breath tears in your chest.\n\nYou don’t have far before you’ll be cornered.",
+      "system": "HP -2.",
+      "choices": [
+        {
+          "label": "Sprint toward the chapel door",
+          "to": "S09",
+          "effects": [
+            {
+              "hp": -2
+            }
+          ]
+        },
+        {
+          "label": "Run for the exit and abandon the ruin",
+          "to": "BAD_END",
+          "effects": [
+            {
+              "hp": -2
+            },
+            {
+              "xp": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S17",
+      "text": "The sigil warms in your palm. Not heat—recognition.\n\nA whisper slides through the ruin like a page turning:\n\nYou are seen.\n\nYou return to the hall with a steadier spine.",
+      "system": "You gained a valuable Special Item.",
+      "choices": [
+        {
+          "label": "Return to the shattered hall",
+          "to": "S07"
+        },
+        {
+          "label": "Equip the Warden Sigil and feel it settle into place",
+          "to": "S21",
+          "effects": [
+            {
+              "xp": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S18",
+      "text": "You shadow the wight to the dark pool. The water isn’t water.\n\nIt’s a mirror of the ceiling that isn’t there.\n\nThe creature leans over it, trembling.\n\nSomething stirs beneath the surface—something that feels older than stone.",
+      "choices": [
+        {
+          "label": "Throw a pebble into the pool",
+          "to": "S22",
+          "effects": {
+            "xp": 2
+          }
+        },
+        {
+          "label": "Back away quietly and take the chapel route",
+          "to": "S09"
+        }
+      ]
+    },
+    {
+      "id": "S19",
+      "text": "You strike again, and again.\n\nThe wight collapses in a twitching heap.\n\nSilence follows—heavy, judgmental.\n\nYou wipe your blade on a torn banner and notice something gleaming in the creature’s nest: a small vial stoppered in wax.",
+      "choices": [
+        {
+          "label": "Take the vial",
+          "to": "S23",
+          "effects": [
+            {
+              "addItem": {
+                "category": "consumables",
+                "id": "glimmer_tonic",
+                "name": "Glimmer Tonic",
+                "qty": 1,
+                "value": 45,
+                "use": {
+                  "type": "heal",
+                  "amount": 5
+                }
+              }
+            },
+            {
+              "xp": 4
+            }
+          ]
+        },
+        {
+          "label": "Don’t linger—leave before something bigger arrives",
+          "to": "S24",
+          "effects": {
+            "xp": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "S20",
+      "text": "You kick loose rubble into the wight’s path.\n\nIt trips, snarling.\n\nYou use the moment to retreat, putting stone between you and teeth.\n\nIt doesn’t pursue.\n\nNot because it can’t.\n\nBecause something else wants you deeper.",
+      "choices": [
+        {
+          "label": "Take the chapel route",
+          "to": "S09"
+        },
+        {
+          "label": "Follow the hall’s far passage into darkness",
+          "to": "S24",
+          "effects": {
+            "xp": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "S21",
+      "text": "You focus on the sigil’s weight—how it seems to anchor you.\n\nYour candle flame steadies. The ruin feels less hostile.\n\nNot friendly.\n\nJust… interested.",
+      "system": "If you equip items via the UI, they affect what appears in your loadout.",
+      "choices": [
+        {
+          "label": "Proceed to the hall’s far passage",
+          "to": "S24"
+        }
+      ]
+    },
+    {
+      "id": "S22",
+      "text": "The pebble hits the surface.\n\nThe pool doesn’t ripple.\n\nIt opens.\n\nA hand—too long, too pale—reaches up and grips the edge.\n\nThis is your warning: some choices carry consequences you cannot outfight.",
+      "system": "WARNING: A lethal path is possible from here if you push your luck.",
+      "choices": [
+        {
+          "label": "Run. Now.",
+          "to": "S12",
+          "effects": {
+            "xp": 1
+          }
+        },
+        {
+          "label": "Lean closer and look into the pool",
+          "to": "S25",
+          "effects": {
+            "xp": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "S23",
+      "text": "The vial’s contents glow faintly—like captured dawn.\n\nIt feels valuable. Useful.\n\nBut you feel a prickle at the back of your neck.\n\nSomething noticed the fight.",
+      "system": "Tip: Use consumables from Inventory. Healing cannot exceed Max HP.",
+      "choices": [
+        {
+          "label": "Pocket the vial and move on",
+          "to": "S24",
+          "effects": [
+            {
+              "xp": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S24",
+      "text": "You find a stairwell spiraling down.\n\nThe air grows colder with each step. Your candle throws long shadows that don’t always match your movement.\n\nAt the bottom: a sealed door of black stone, carved with the same looping runes as the sigil.\n\nThere is no handle.\n\nOnly a shallow indentation—like it expects a token.\n\nThe ruin is asking a question.",
+      "system": "Whisper: Some doors answer to what you carry. Check Character → Loadout (Special Items) before you force anything.",
+      "choices": [
+        {
+          "label": "Press the Warden Sigil to the indentation",
+          "to": "GOOD_END",
+          "requires": {
+            "hasItem": {
+              "category": "special",
+              "id": "warden_sigil"
+            }
+          },
+          "effects": [
+            {
+              "xp": 10
+            }
+          ]
+        },
+        {
+          "label": "Hold your candle to the runes and wait",
+          "to": "SPECIAL_END",
+          "requires": {
+            "hasItem": {
+              "category": "special",
+              "id": "candle_stub"
+            }
+          },
+          "effects": [
+            {
+              "setFlag": "CandleMoment"
+            },
+            {
+              "xp": 8
+            }
+          ]
+        },
+        {
+          "label": "Force the door open with brute strength",
+          "to": "S26",
+          "effects": [
+            {
+              "hp": -6
+            },
+            {
+              "xp": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S25",
+      "text": "You lean closer.\n\nThe pool is not a pool.\n\nIt’s a mouth.\n\nCold wraps your face. Fingers hook behind your jaw.\n\nFor one heartbeat, you understand: curiosity is not wisdom. Sometimes it’s just hunger wearing a better mask.",
+      "system": "This is the lethal consequence path.",
+      "choices": [
+        {
+          "label": "Try to wrench free",
+          "to": "S27",
+          "effects": [
+            {
+              "hp": -9
+            },
+            {
+              "xp": 1
+            }
+          ]
+        },
+        {
+          "label": "Give in to the pull",
+          "to": "DEATH",
+          "effects": [
+            {
+              "hp": -99
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S26",
+      "text": "You drive your shoulder into the stone.\n\nIt doesn’t budge.\n\nAgain.\n\nThe impact rattles your bones. Your vision flashes white.\n\nWhen the door finally shifts, it’s not because you won.\n\nIt’s because something on the other side let you.\n\nA breath—ancient and pleased—slides across your face.",
+      "system": "HP -6. If you are low, this can end the run.",
+      "choices": [
+        {
+          "label": "Step through anyway",
+          "to": "DEATH",
+          "effects": [
+            {
+              "hp": -99
+            }
+          ]
+        },
+        {
+          "label": "Stagger back and flee while you still can",
+          "to": "BAD_END",
+          "effects": [
+            {
+              "xp": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S27",
+      "text": "You tear away, skin burning with cold.\n\nYour candle sputters—then steadies.\n\nThe pool’s surface becomes still again.\n\nBut you’ve been marked by whatever lives beneath.\n\nYou don’t know what that means yet.\n\nYou only know it noticed you back.",
+      "choices": [
+        {
+          "label": "Retreat to the stairwell and reassess",
+          "to": "S24"
+        },
+        {
+          "label": "Leave the ruin before it can try again",
+          "to": "BAD_END"
+        }
+      ]
+    },
+    {
+      "id": "GOOD_END",
+      "text": "The Warden Sigil fits the indentation like it was made for your hand.\n\nThe black stone door sighs open.\n\nInside is not treasure.\n\nIt’s a chamber lined with names—hundreds of them—carved into the walls.\n\nYou add yours with a trembling fingertip.\n\nThe ruin accepts you.\n\nFor now.\n\nYou exit the dungeon alive, carrying proof that the world responds to those who dare to touch it.",
+      "system": "GOOD ENDING: You completed the run and earned a meaningful story victory.",
+      "choices": [
+        {
+          "label": "Return To Main Menu",
+          "toMenu": true
+        }
+      ]
+    },
+    {
+      "id": "BAD_END",
+      "text": "You leave the ruin with your heart hammering and your hands shaking.\n\nThe night air feels too loud. Too exposed.\n\nYou didn’t solve the road’s silence.\n\nYou didn’t learn what waits beneath the stone.\n\nBut you lived.\n\nSometimes that’s the only victory you can afford.\n\nAnd sometimes… survival is just postponing the question.",
+      "system": "BAD ENDING: You escaped, but you didn’t uncover the ruin’s secret.",
+      "choices": [
+        {
+          "label": "Return To Main Menu",
+          "toMenu": true
+        }
+      ]
+    },
+    {
+      "id": "SPECIAL_END",
+      "text": "You lift the candle to the runes.\n\nThe flame elongates—thin and vertical—like a blade of light.\n\nFor a moment, the black stone becomes translucent.\n\nYou see the ruin’s memory: builders laying the first stone, wardens swearing oaths, a door sealed in fear and hope.\n\nThen the vision fades.\n\nThe door remains shut.\n\nBut something inside has seen you—and decided you’re not a stranger anymore.\n\nYou step away with knowledge instead of loot.\n\nIn Lorecraft, that can be worth more than gold.",
+      "system": "SPECIAL ENDING: You earned a lore revelation. The world noticed you noticing it.",
+      "choices": [
+        {
+          "label": "Return To Main Menu",
+          "toMenu": true
+        }
+      ]
+    },
+    {
+      "id": "DEATH",
+      "text": "Your strength gives out.\n\nThe ruin doesn’t rage. It doesn’t gloat.\n\nIt simply waits, the way stone waits.\n\nThis is the tutorial’s rule: when your resource hits zero, the run ends.\n\nTry again. Learn the danger. Use your items when it matters.\n\nThe world that notices is not cruel.\n\nIt’s just real.",
+      "system": "DEATH: First failure is expected. You’re learning VerseCraft’s rules through play.",
+      "choices": [
+        {
+          "label": "Return To Main Menu",
+          "toMenu": true
+        }
+      ]
+    }
+  ],
+  "packId": "starter",
+  "blurb": "A first run into a ruin that watches you back. Learn VerseCraft’s rules through choices, consequences, and loot—survive long enough to discover what the world remembers.",
+  "assets": {
+    "cover": "content/packs/starter/covers/world-of-lorecraft.png"
+  }
+}

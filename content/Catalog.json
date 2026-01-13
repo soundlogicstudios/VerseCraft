@@ -1,0 +1,10 @@
+{
+  "CatalogVersion": "0.0.01",
+  "Packs": [
+    {
+      "pack_id": "starter",
+      "title": "Starter Pack",
+      "path": "./content/packs/starter/Pack.json"
+    }
+  ]
+}
