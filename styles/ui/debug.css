@@ -1,9 +1,0 @@
-/* Debug outlines toggled via body.debug */
-body.debug .hitbox{
-  outline: 2px dashed var(--outline);
-  outline-offset: -2px;
-}
-
-body.debug .footer{
-  background: rgba(0,0,0,.55);
-}
