@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <title>VerseCraft 2.0</title>
+
+  <!-- Build stamp (bump if you need to force-refresh sanity) -->
+  <meta name="build" content="2026-01-13-VC-0.0.06" />
+
+  <!-- NOTE: No <base> tag. All paths are relative for GitHub Pages safety. -->
+  <link rel="stylesheet" href="./styles/base.css?v=0.0.06" />
+  <link rel="stylesheet" href="./styles/ui/hitboxes.css?v=0.0.06" />
+  <link rel="stylesheet" href="./styles/ui/debug.css?v=0.0.06" />
+  <link rel="stylesheet" href="./styles/screens/launcher.css?v=0.0.06" />
+
+  <!-- Screen-specific (mostly stubs today, but keeps the contract) -->
+  <link rel="stylesheet" href="./styles/screens/menu.css?v=0.0.06" />
+  <link rel="stylesheet" href="./styles/screens/settings.css?v=0.0.06" />
+  <link rel="stylesheet" href="./styles/screens/library.css?v=0.0.06" />
+  <link rel="stylesheet" href="./styles/screens/story.css?v=0.0.06" />
+  <link rel="stylesheet" href="./styles/screens/tos.css?v=0.0.06" />
+
+  <!-- 🔧 Hotfix overrides: keep label control here so nothing else “ties” to it -->
+  <style>
+    :root{
+      /* ✅ SINGLE DIAL: move the Launcher "Back to Library" label DOWN into parchment */
+      --launcher-back-label-top: 12%;   /* change this one number (e.g., 18%, 20%, etc.) */
+    }
+
+    /* LAUNCHER: Back-to-Library label positioning (DOM element) */
+    #lblLauncherBack{
+      position: absolute;
+      left: 50% !important;
+      top: var(--launcher-back-label-top) !important;  /* ⬅️ the vertical dial */
+      transform: translateX(-50%) !important;
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 50;          /* keep it above the ornate frame/art */
+      width: 90%;
+      max-width: 90%;
+    }
+
+    /* STORY: remove ONLY the placeholder title, keep Back label visible */
+    .story-title{
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="screens">
+
+      <!-- SPLASH -->
+      <section id="screen-splash" class="screen active" data-screen="splash" aria-label="Splash">
+        <img class="screen-bg" alt="Splash" src="./src/global/versecraft-ui/global-backgrounds/splash.webp" />
+        <button id="hbSplashTap" class="hitbox" aria-label="Tap to Start"></button>
+      </section>
+
+      <!-- TERMS OF SERVICE -->
+      <section id="screen-tos" class="screen" data-screen="tos" aria-label="Terms of Service">
+        <img class="screen-bg" alt="Terms of Service" src="./src/global/versecraft-ui/global-backgrounds/tos-accept.webp" />
+
+        <div class="tos-panel" aria-hidden="false">
+          <div class="tos-scroll" id="tosScroll" role="region" aria-label="Terms text">
+            <div class="tos-content" id="tosContent">
+              <h2><center>Terms of Service</center></h2>
+              </center>VerseCraft Terms of Use
+Effective Date: [1/1/2026]</center>
+Welcome to VerseCraft! <p></p>These Terms of Use (“Terms”) govern your use of the VerseCraft mobile app, website, and services (collectively, “Service”). By accessing or using the Service, you agree to these Terms.</p>
+
+<p>1. Eligibility
+	•	You must be at least 13 years old to use the Service.   •	Users under 18 must have parental consent.</p>  <p>2. Account Registration
+	•	You may need to create an account to access certain features.   •	Keep your login credentials secure; you are responsible for all activity under your account.   •	Notify VerseCraft immediately of any unauthorized use.  </p><p>3. User Content
+	•	Users may submit stories, art, and other content (“User Content”).   •	By submitting User Content, you grant VerseCraft a worldwide, royalty-free, sublicensable, transferable license to display, distribute, modify, and monetize that content within the Service.   •	You retain ownership of your original content, but you represent that you have all necessary rights to grant this license.  </p><p>4. Prohibited Conduct
+You agree not to:
+	•	Post content that is unlawful, obscene, or infringes third-party rights.   •	Attempt to hack or interfere with the Service.   •	Use the Service for commercial purposes without explicit permission.  </p><p>5. Intellectual Property
+	•	All app content, branding, and software code is © [Year] VerseCraft LLC.   •	You may not copy, modify, or redistribute VerseCraft intellectual property without permission.</p><p>  6. Subscriptions & Payments
+	•	Paid content or subscriptions are processed through the app stores (iOS/Android).   •	Refunds are subject to store policies.</p><p>  7. Termination
+	•	VerseCraft may suspend or terminate accounts for violations of these Terms.   •	Upon termination, your access to paid content or user submissions may be revoked.</p><p>8. Disclaimers
+	•	The Service is provided “as is.”   •	VerseCraft is not responsible for technical errors, downtime, or user disputes.</p><p>9. Limitation of Liability
+	•	To the maximum extent allowed by law, VerseCraft is not liable for damages arising from use of the Service.</p><p>10. Governing Law
+	•	These Terms are governed by the laws of [CA, USA].</p>
+Contact: [soundlogicitservices@gmail.com]
+               <p>
+                By tapping Accept, you agree to these terms.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <button id="hbTosAccept" class="hitbox" aria-label="Accept Terms"></button>
+        <div id="lblTosAccept" class="tosAcceptLabel">Tap to Accept</div>
+      </section>
+
+      <!-- MENU -->
+      <section id="screen-menu" class="screen" data-screen="menu" aria-label="Main Menu">
+        <img class="screen-bg" alt="Menu" src="./src/global/versecraft-ui/global-backgrounds/main-menu-no-save.webp" />
+        <button id="hbMenuLoad" class="hitbox" aria-label="Load / New Story"></button>
+        <button id="hbMenuSettings" class="hitbox" aria-label="Settings"></button>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="screen-settings" class="screen" data-screen="settings" aria-label="Settings">
+        <img class="screen-bg" alt="Settings" src="./src/global/versecraft-ui/global-backgrounds/settings-menu.webp" />
+        <button id="hbSettingsBack" class="hitbox" aria-label="Back"></button>
+        <button id="hbSettingsClear" class="hitbox" aria-label="Clear Save"></button>
+        <button id="hbSettingsTheme" class="hitbox" aria-label="Theme"></button>
+      </section>
+
+      <!-- LIBRARY -->
+      <section id="screen-library" class="screen" data-screen="library" aria-label="Library">
+        <img class="screen-bg" alt="Library" src="./backgrounds/ui/global/library-pre-render-page1.webp" />
+        <div class="libraryRowLabel" id="libLabel0" data-row="0"></div>
+        <div class="libraryRowLabel" id="libLabel1" data-row="1"></div>
+        <div class="libraryRowLabel" id="libLabel2" data-row="2"></div>
+        <div class="libraryRowLabel" id="libLabel3" data-row="3"></div>
+        <button id="hbLibraryMenu" class="hitbox" aria-label="Menu"></button>
+        <button id="hbLibraryStore" class="hitbox" aria-label="Store"></button>
+        <button id="hbLibraryNext" class="hitbox" aria-label="Next Page"></button>
+        <button id="hbRow0" class="hitbox" aria-label="Story Row 1"></button>
+        <button id="hbRow1" class="hitbox" aria-label="Story Row 2"></button>
+        <button id="hbRow2" class="hitbox" aria-label="Story Row 3"></button>
+        <button id="hbRow3" class="hitbox" aria-label="Story Row 4"></button>
+      </section>
+
+      <!-- LIBRARY — PAGE 2 -->
+      <section id="screen-library-2" class="screen" data-screen="library2" aria-label="Library Page 2">
+        <img class="screen-bg" alt="Library Page 2" src="./backgrounds/ui/global/library-pre-render-page2.webp" />
+        <div class="libraryRowLabel" id="libLabel4" data-row="4"></div>
+        <div class="libraryRowLabel" id="libLabel5" data-row="5"></div>
+        <div class="libraryRowLabel" id="libLabel6" data-row="6"></div>
+        <div class="libraryRowLabel" id="libLabel7" data-row="7"></div>
+        <button id="hbLibrary2Back" class="hitbox" aria-label="Back to Library Page 1"></button>
+        <button id="hbLibraryMoreSoon" class="hitbox" aria-label="More Stories Available Soon"></button>
+        <button id="hbLibrary2Store" class="hitbox" aria-label="Store"></button>
+        <button id="hbRow4" class="hitbox" aria-label="Story Row 5"></button>
+        <button id="hbRow5" class="hitbox" aria-label="Story Row 6"></button>
+        <button id="hbRow6" class="hitbox" aria-label="Story Row 7"></button>
+        <button id="hbRow7" class="hitbox" aria-label="Story Row 8"></button>
+      </section>
+
+      <!-- LAUNCHER (Story Detail / Start / Continue) -->
+      <section id="screen-launcher" class="screen" data-screen="launcher" aria-label="Story Launcher">
+        <img class="screen-bg" alt="Launcher" src="./backgrounds/ui/global/filled-parchment-astral-balanced-gold-big.webp" />
+
+        <img id="launcherCover" alt="Selected Story Cover" style="
+          position:absolute;
+          left: 10%;
+          top: 16%;
+          width: 80%;
+          height: 34%;
+          object-fit: contain;
+          pointer-events:none;
+          user-select:none;
+          -webkit-user-drag:none;
+        " />
+
+        <div id="launcherTextPanel">
+          <div id="launcherTitle"></div>
+          <div id="launcherBlurb"></div>
+        </div>
+
+        <button id="hbLauncherBack" class="hitbox" aria-label="Back"></button>
+        <div id="lblLauncherBack" class="launcherNavLabel">Back to Library</div>
+
+        <button id="hbLauncherStart" class="hitbox" aria-label="Start"></button>
+        <div id="lblLauncherStart" class="launcherPillLabel">Start</div>
+
+        <button id="hbLauncherContinue" class="hitbox" aria-label="Continue"></button>
+      </section>
+
+      <!-- STORY (placeholder shell) -->
+<section id="screen-story" class="screen" data-screen="story" aria-label="Story">
+  <img class="screen-bg" alt="Story" src="./styles/screens/ui/backgrounds/story-panel/lorecraft-story-panel-narrative.webp" />
+
+  <!-- NAV ONLY: this is the parchment scroll strip area under the logo -->
+  <div class="story-top">
+    <!-- Keep Back text visible for calibration -->
+    <button class="story-back" id="hbStoryBack" aria-label="Back to Library">Exit Story</button>
+    <!-- Title placeholder is present but hidden by CSS -->
+    <div class="story-title">Story Placeholder</div>
+  </div>
+
+  <!-- Narrative viewport (ONLY this contains the scrolling text) -->
+  <div class="story-shell">
+    <div class="story-text">VerseCraft™
+
+VerseCraft is a mobile-first interactive storytelling engine that blends classic Choose Your Own Adventure narrative design with light RPG mechanics, modern web technology, and a strong emphasis on visual presentation.
+
+This repository powers the VerseCraft Web Experience, deployed via GitHub Pages and optimized for mobile Safari (iOS).
+
+⸻
+
+✨ What Is VerseCraft?
+
+VerseCraft is designed as a story engine, not just a single game.
+
+At its core, it supports:
+	•	Branching narrative paths
+	•	Story packs and modules
+	•	Archetype-driven perspectives
+	•	Inventory, stats, and progression (engine-backed)
+	•	Touch-first navigation using invisible hitboxes
+	•	Strong visual framing using illustrated UI panels and skins
+
+Think of it as a foundation for:
+	•	Narrative RPGs
+	•	Interactive fiction
+	•	Episodic story worlds
+	•	Creator-driven story packs
+
+⸻
+
+📱 Platform Focus
+	•	Primary target: Mobile browsers (iOS Safari)
+	•	Secondary: Desktop browsers (for testing/debug)
+	•	Deployment: GitHub Pages
+	•	Offline/PWA support: Planned
+
+The UI is intentionally built mobile-first, including:
+	•	Safe-area awareness (notches / dynamic island)
+	•	Tap-optimized hitboxes
+	•	Minimal reliance on traditional buttons
+
+⸻
+
+🧭 Project Status
+
+🚧 Active Development / Early Build
+
+This repository represents a working but evolving version of VerseCraft.
+Expect:
+	•	Frequent UI iteration
+	•	Placeholder story content
+	•	Ongoing refactors behind a stable visual surface
+
+Core navigation and screen flow are considered foundational, while content and systems continue to expand.
+    </div>
+  </div>
+</section>
+
+    </div>
+  </div>
+
+  <!-- Footer + Debug toggle -->
+  <div id="footer" class="footer">
+    VerseCraft v0.0.07 <span class="footer-spacer">•</span>
+    <button id="btnDebug" class="footer-btn" type="button">Debug</button>
+  </div>
+
+  <script type="module" src="./src/app.js?v=0.0.06"></script>
+  <script type="module" src="./src/debug-hitbox-editor.js?v=0.0.06"></script>
+</body>
+</html>

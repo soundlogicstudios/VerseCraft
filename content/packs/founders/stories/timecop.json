@@ -1,0 +1,24 @@
+{
+  "id": "timecop",
+  "title": "Timecop",
+  "subtitle": "Timeline Enforcement",
+
+  "packId": "founders",
+  "blurb": "You police history itself. One mistake could unravel everything.",
+
+  "assets": {
+    "cover": "content/packs/founders/covers/timecop.webp"
+  },
+
+  "start": "S01",
+
+  "sections": [
+    {
+      "id": "S01",
+      "text": "The chronometer hums as the jump completes.",
+      "choices": [
+        { "label": "Assess the timeline", "to": "S02" }
+      ]
+    }
+  ]
+}

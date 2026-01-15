@@ -1,0 +1,37 @@
+/* Library screen-specific overrides (optional) */
+
+/* ================================
+   Additive: Library Row Labels
+   - Visual only, never blocks hitboxes
+   ================================ */
+.libraryRowLabel{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font: 900 20px/1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  letter-spacing: .4px;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 2px 10px rgba(0,0,0,.80);
+
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+}
+
+#libLabel0{ left: 10.98%; top: 23.28%; width: 77.47%; height: 4.19%; }
+
+#libLabel1{ left: 10.66%; top: 42.38%; width: 79.06%; height: 4.23%; }
+
+#libLabel2{ left: 10.46%; top: 61.8%; width: 78.8%; height: 4.27%; }
+
+#libLabel3{ left: 10.93%; top: 80.39%; width: 79.73%; height: 3.81%; }
+
+#libLabel4{ left: 11.78%; top: 23.04%; width: 76.13%; height: 3.91%; }
+
+#libLabel5{ left: 11.73%; top: 41.66%; width: 75.87%; height: 3.51%; }
+
+#libLabel6{ left: 11.53%; top: 58.38%; width: 76.4%; height: 3.51%; }
+
+#libLabel7{ left: 11.73%; top: 75.94%; width: 74.93%; height: 3.85%; }
