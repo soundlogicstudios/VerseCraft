@@ -2,7 +2,8 @@
   "start": "n02",
   "nodes": {
     "n02": {
-      "video": "src/content/video/backrooms/backrooms_n02_intro.mp4",
+      "video": "src/content/video/backrooms/silent/n02_silent_video.mp4",
+      "narration": "src/content/video/backrooms/audio/n02_narrative.m4a",
       "choices": [
         { "label": "Go Left",  "at": 5, "goto": "n03" },
         { "label": "Go Right", "at": 5, "goto": "n04" }
