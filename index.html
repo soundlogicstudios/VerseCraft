@@ -9,15 +9,9 @@
 <body>
   <main class="app">
 
-    <!-- APP BACKGROUND (behind everything) -->
-    <div class="app-background" aria-hidden="true"></div>
-
     <!-- VIDEO STAGE -->
     <section class="stage" aria-label="Video Stage">
       <video id="video" class="video" playsinline preload="metadata"></video>
-
-      <!-- DIMMER (used during choices) -->
-      <div id="dimmer" class="dimmer" aria-hidden="true"></div>
 
       <!-- FRAME OVERLAY -->
       <img
@@ -28,32 +22,22 @@
       />
 
       <!-- CHOICES -->
-      <div id="choices" class="choices hidden" aria-label="Choices"></div>
+      <div id="choices" class="choices hidden"></div>
 
-      <!-- MODAL (errors etc) -->
-      <div id="modalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
-        <div class="modal-panel" role="dialog" aria-modal="true">
-          <div id="modalContent" class="modal-content"></div>
-          <button id="modalClose" class="modal-close" type="button">Close</button>
-        </div>
-      </div>
-
-      <!-- STATUS (debug) -->
-      <div id="status" class="status" aria-live="polite"></div>
+      <!-- STATUS -->
+      <div id="status" class="status"></div>
     </section>
 
-    <!-- INTRO OVERLAY (flicker + poster + tap to begin) -->
-    <div id="introOverlay" class="intro-overlay" aria-label="Intro">
-      <div class="intro-bg-stack" aria-hidden="true">
+    <!-- INTRO OVERLAY -->
+    <div id="introOverlay" class="intro-overlay">
+
+      <div class="intro-bg-stack">
         <div class="bg-layer bg1"></div>
         <div class="bg-layer bg2"></div>
         <div class="bg-layer bg3"></div>
 
-        <!-- brief white flash -->
+        <!-- white flash -->
         <div id="flash" class="flash"></div>
-
-        <!-- subtle scanlines for fluorescent vibe -->
-        <div class="scanlines"></div>
       </div>
 
       <div class="intro-modal">
@@ -61,16 +45,15 @@
           src="assets/ui/modals/modal_panel.webp"
           class="intro-panel"
           alt=""
-          aria-hidden="true"
         />
 
         <div class="intro-title">THE BACKROOMS</div>
-        <div class="intro-subtitle">Tap required to begin</div>
 
-        <button id="introStartBtn" class="intro-start-btn" type="button">
+        <button id="introStartBtn" class="intro-start-btn">
           TAP TO BEGIN
         </button>
       </div>
+
     </div>
 
   </main>
