@@ -1,16 +1,26 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Branching App</title>
-<link rel="stylesheet" href="styles/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Branching App</title>
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
+  <main id="app" class="app">
+    <section class="stage" aria-label="Video Stage">
+      <video id="video" class="video" playsinline preload="metadata"></video>
 
-<video id="video" playsinline controls style="width:100%;height:100vh;object-fit:cover;"></video>
-<div id="choices" style="position:absolute;bottom:10%;width:100%;text-align:center;"></div>
+      <!-- Tap-to-play overlay (also doubles as "autoplay blocked" fix on iOS) -->
+      <button id="tapToPlay" class="tap-to-play" type="button">
+        TAP TO PLAY
+      </button>
 
-<script src="src/app.js"></script>
+      <!-- Debug / error readout -->
+      <div id="status" class="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="src/app.js"></script>
 </body>
 </html>
