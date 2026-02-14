@@ -4,24 +4,14 @@
     "n02": {
       "video": "src/content/video/backrooms/backrooms_n02_intro.mp4",
       "choices": [
-        {
-          "label": "Go Left",
-          "at": 5,
-          "goto": "n03"
-        },
-        {
-          "label": "Go Right",
-          "at": 5,
-          "goto": "n04"
-        }
+        { "label": "Go Left",  "at": 5, "goto": "n03" },
+        { "label": "Go Right", "at": 5, "goto": "n04" }
       ]
     },
-
     "n03": {
       "video": "src/content/video/backrooms/backrooms_n03_left.mp4",
       "choices": []
     },
-
     "n04": {
       "video": "src/content/video/backrooms/backrooms_n04_right.mp4",
       "choices": []
