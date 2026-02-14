@@ -24,7 +24,7 @@ export async function bootStoryPlayer(cfg) {
 
   const story = await res.json();
 
-  // Clear any previous shown flags
+  // Clear any previous shown flags (kept for compatibility with older JSONs)
   for (const nodeId of Object.keys(story.nodes || {})) {
     const node = story.nodes[nodeId];
     (node.choices || []).forEach(c => { delete c._shown; });
@@ -40,7 +40,6 @@ export async function bootStoryPlayer(cfg) {
 
   function showChoices(choices) {
     if (dimmerEl) dimmerEl.style.opacity = "1";
-    video.pause();
 
     choicesEl.innerHTML = "";
     choicesEl.classList.remove("hidden");
@@ -68,8 +67,12 @@ export async function bootStoryPlayer(cfg) {
     currentNodeId = nodeId;
     hideChoices();
 
-    // Reset shown flags for this node each entry
+    // Reset shown flags for this node each entry (kept for compatibility)
     (node.choices || []).forEach(c => { delete c._shown; });
+
+    // IMPORTANT: Clear prior handlers so they don't stack
+    video.ontimeupdate = null;
+    video.onended = null;
 
     video.src = node.video;
     video.playsInline = true;
@@ -77,7 +80,6 @@ export async function bootStoryPlayer(cfg) {
 
     setStatus(`Playing node "${nodeId}" -> ${node.video}`);
 
-    // Because we started from a user tap, this should succeed on iOS with audio.
     try {
       await video.play();
     } catch (e) {
@@ -85,21 +87,14 @@ export async function bootStoryPlayer(cfg) {
       return;
     }
 
-    video.ontimeupdate = () => {
-      const choices = node.choices || [];
-      for (const choice of choices) {
-        if (choice._shown) continue;
-        if (typeof choice.at === "number" && video.currentTime >= choice.at) {
-          choice._shown = true;
-          showChoices(choices);
-          break;
-        }
-      }
-    };
-
+    // ✅ Choices ONLY at the end (no timers)
     video.onended = () => {
       const choices = node.choices || [];
-      if (choices.length) showChoices(choices);
+      if (choices.length) {
+        showChoices(choices);
+      } else {
+        setStatus(`Ended "${nodeId}". No choices.`);
+      }
     };
   }
 
