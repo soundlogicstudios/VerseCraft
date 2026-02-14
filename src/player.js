@@ -1,5 +1,6 @@
 export async function bootStoryPlayer(cfg) {
   const video = document.getElementById(cfg.videoElementId);
+  const narration = cfg.narrationElementId ? document.getElementById(cfg.narrationElementId) : null;
   const choicesEl = document.getElementById(cfg.choicesContainerId);
   const dimmerEl = document.getElementById(cfg.dimmerElementId);
   const statusEl = document.getElementById(cfg.statusElementId);
@@ -14,6 +15,56 @@ export async function bootStoryPlayer(cfg) {
     if (cfg.onFatal) cfg.onFatal(msg);
     else setStatus(msg);
   };
+
+  // Always keep the video silent so it never interrupts BGM on iOS.
+  // (Even if your MP4 is silent, setting muted prevents audio-session weirdness.)
+  function forceVideoSilent() {
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.setAttribute("muted", "");
+  }
+
+  function stopNarration() {
+    if (!narration) return;
+    narration.pause();
+    narration.currentTime = 0;
+    narration.removeAttribute("src");
+    narration.load();
+  }
+
+  function playNarrationForNode(node) {
+    if (!narration) return;
+
+    // Support a few key names so you can evolve JSON without breaking:
+    // preferred: node.narration
+    // alternates: node.narrative, node.audio, node.narrationAudio
+    const src =
+      node?.narration ||
+      node?.narrative ||
+      node?.audio ||
+      node?.narrationAudio ||
+      "";
+
+    if (!src) {
+      stopNarration();
+      return;
+    }
+
+    // Set/refresh src
+    if (narration.src !== new URL(src, window.location.href).href) {
+      narration.src = src;
+      narration.load();
+    }
+
+    narration.currentTime = 0;
+
+    // Try to play; if iOS blocks (rare after initial gesture), we fail soft.
+    narration.play().catch(() => {
+      console.warn("Narration autoplay blocked (iOS). User gesture may be required.");
+    });
+  }
 
   setStatus(`Loading story: ${cfg.storyJsonPath}`);
   const res = await fetch(cfg.storyJsonPath, { cache: "no-store" });
@@ -57,6 +108,33 @@ export async function bootStoryPlayer(cfg) {
     });
   }
 
+  function attachSync(videoEl, audioEl) {
+    if (!videoEl || !audioEl) return;
+
+    // Remove previous handlers so they don't stack
+    videoEl.ontimeupdate = null;
+    videoEl.onended = null;
+    videoEl.onpause = null;
+
+    // Keep narration aligned (light-touch correction)
+    videoEl.ontimeupdate = () => {
+      if (audioEl.paused) return;
+      const drift = Math.abs(videoEl.currentTime - audioEl.currentTime);
+      if (drift > 0.25) {
+        audioEl.currentTime = videoEl.currentTime;
+      }
+    };
+
+    videoEl.onpause = () => {
+      audioEl.pause();
+    };
+
+    videoEl.onended = () => {
+      audioEl.pause();
+      audioEl.currentTime = 0;
+    };
+  }
+
   async function playNode(nodeId) {
     const node = story?.nodes?.[nodeId];
     if (!node) {
@@ -73,12 +151,21 @@ export async function bootStoryPlayer(cfg) {
     // IMPORTANT: Clear prior handlers so they don't stack
     video.ontimeupdate = null;
     video.onended = null;
+    video.onpause = null;
+
+    forceVideoSilent();
 
     video.src = node.video;
     video.playsInline = true;
     video.preload = "metadata";
 
     setStatus(`Playing node "${nodeId}" -> ${node.video}`);
+
+    // Prepare narration BEFORE starting playback so it's ready.
+    if (narration) {
+      playNarrationForNode(node);
+      attachSync(video, narration);
+    }
 
     try {
       await video.play();
@@ -87,8 +174,17 @@ export async function bootStoryPlayer(cfg) {
       return;
     }
 
+    // If narration exists but didn't start, try once more now that video is playing.
+    if (narration && narration.src) {
+      narration.play().catch(() => {});
+    }
+
     // ✅ Choices ONLY at the end (no timers)
     video.onended = () => {
+      if (narration) {
+        narration.pause();
+        narration.currentTime = 0;
+      }
       const choices = node.choices || [];
       if (choices.length) {
         showChoices(choices);

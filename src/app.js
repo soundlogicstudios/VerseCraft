@@ -128,6 +128,7 @@ introStartBtn.addEventListener("click", async () => {
     await bootStoryPlayer({
       storyJsonPath: STORY_JSON,
       videoElementId: "video",
+      narrationElementId: "narration",
       choicesContainerId: "choices",
       dimmerElementId: "dimmer",
       statusElementId: "status",
