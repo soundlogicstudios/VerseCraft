@@ -9,17 +9,17 @@
 <body>
   <main class="app">
 
-    <!-- APP BACKGROUND (behind everything) -->
+    <!-- APP BACKGROUND -->
     <div class="app-background" aria-hidden="true"></div>
 
     <!-- VIDEO STAGE -->
     <section class="stage" aria-label="Video Stage">
       <video id="video" class="video" playsinline preload="metadata"></video>
 
-      <!-- DIMMER (used during choices) -->
+      <!-- DIMMER -->
       <div id="dimmer" class="dimmer" aria-hidden="true"></div>
 
-      <!-- FRAME OVERLAY -->
+      <!-- VIDEO FRAME OVERLAY -->
       <img
         src="assets/ui/frames/video_frame_overlay.webp"
         class="frame-overlay"
@@ -27,10 +27,18 @@
         aria-hidden="true"
       />
 
+      <!-- NEW SCREEN BORDER (THIN EDGE ONLY) -->
+      <img
+        src="assets/ui/frames/screen_border.webp"
+        class="screen-border"
+        alt=""
+        aria-hidden="true"
+      />
+
       <!-- CHOICES -->
       <div id="choices" class="choices hidden" aria-label="Choices"></div>
 
-      <!-- MODAL (errors etc) -->
+      <!-- MODAL -->
       <div id="modalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
         <div class="modal-panel" role="dialog" aria-modal="true">
           <div id="modalContent" class="modal-content"></div>
@@ -38,21 +46,17 @@
         </div>
       </div>
 
-      <!-- STATUS (debug) -->
+      <!-- STATUS -->
       <div id="status" class="status" aria-live="polite"></div>
     </section>
 
-    <!-- INTRO OVERLAY (flicker + poster + tap to begin) -->
+    <!-- INTRO OVERLAY -->
     <div id="introOverlay" class="intro-overlay" aria-label="Intro">
       <div class="intro-bg-stack" aria-hidden="true">
         <div class="bg-layer bg1"></div>
         <div class="bg-layer bg2"></div>
         <div class="bg-layer bg3"></div>
-
-        <!-- brief white flash -->
         <div id="flash" class="flash"></div>
-
-        <!-- subtle scanlines for fluorescent vibe -->
         <div class="scanlines"></div>
       </div>
 
