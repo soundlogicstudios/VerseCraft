@@ -4,86 +4,109 @@ const STORY_JSON = "src/content/stories/backrooms/story.json";
 
 const introOverlay = document.getElementById("introOverlay");
 const introStartBtn = document.getElementById("introStartBtn");
+const bgLayers = Array.from(document.querySelectorAll(".bg-layer"));
+const bgStack = document.querySelector(".intro-bg-stack");
 const flash = document.getElementById("flash");
+
+const modalBackdrop = document.getElementById("modalBackdrop");
+const modalContent = document.getElementById("modalContent");
+const modalClose = document.getElementById("modalClose");
 const statusEl = document.getElementById("status");
 
-const bg1 = document.querySelector(".bg1");
-const bg2 = document.querySelector(".bg2");
-const bg3 = document.querySelector(".bg3");
-const layers = [bg1, bg2, bg3];
-
-function setStatus(msg){
+function setStatus(msg) {
   statusEl.textContent = msg;
   console.log(msg);
 }
 
-function showOnly(i){
-  layers.forEach((el, idx) => el.style.opacity = (idx === i ? "1" : "0"));
+function showModal(msg) {
+  modalContent.textContent = msg;
+  modalBackdrop.classList.remove("hidden");
 }
 
-function doFlash(){
+modalClose.addEventListener("click", () => modalBackdrop.classList.add("hidden"));
+
+function setActiveLayer(index) {
+  bgLayers.forEach((l, i) => (l.style.opacity = i === index ? "1" : "0"));
+}
+
+function doFlash() {
   flash.classList.remove("flash-on");
+  // force reflow so animation retriggers
   void flash.offsetWidth;
   flash.classList.add("flash-on");
 }
 
-function doGlitch(){
-  // quick fluorescent brightness flicker
-  const stack = document.querySelector(".intro-bg-stack");
-  stack.style.filter = "brightness(1.35) contrast(1.15)";
-  setTimeout(() => { stack.style.filter = "brightness(0.90) contrast(1.25)"; }, 40);
-  setTimeout(() => { stack.style.filter = ""; }, 90);
+function doGlitch() {
+  bgStack.classList.remove("glitch");
+  void bgStack.offsetWidth;
+  bgStack.classList.add("glitch");
+  setTimeout(() => bgStack.classList.remove("glitch"), 140);
 }
 
-function flickerIntro(){
-  // Ensure something shows instantly
-  showOnly(0);
+function flickerIntro() {
+  // Start on a random layer so there's no dead black frame
+  setActiveLayer(Math.floor(Math.random() * bgLayers.length));
 
-  let step = 0;
-  const steps = 14;
-  const base = 85;
-  const jitter = 65;
+  let i = 0;
+  const steps = 14; // flicker count
+  const base = 85;  // ms
+  const jitter = 65; // ms
 
-  function tick(){
-    const idx = Math.floor(Math.random() * layers.length);
-    showOnly(idx);
+  function tick() {
+    const idx = Math.floor(Math.random() * bgLayers.length);
+    setActiveLayer(idx);
 
+    // random glitch + flash moments
     const r = Math.random();
-    if (r < 0.22) doGlitch();
-    if (r < 0.14) doFlash();
+    if (r < 0.25) doGlitch();
+    if (r < 0.16) doFlash(); // brief white flash
 
-    step++;
-    if (step < steps){
-      setTimeout(tick, base + Math.floor(Math.random() * jitter));
+    i++;
+    if (i < steps) {
+      const nextDelay = base + Math.floor(Math.random() * jitter);
+      setTimeout(tick, nextDelay);
     } else {
-      // land on one
-      const finalIdx = Math.floor(Math.random() * layers.length);
-      showOnly(finalIdx);
-      if (Math.random() < 0.30) setTimeout(doGlitch, 120);
+      // Land on a final layer and hold it
+      const finalIdx = Math.floor(Math.random() * bgLayers.length);
+      setActiveLayer(finalIdx);
+
+      // One last subtle glitch settle (optional)
+      setTimeout(() => {
+        if (Math.random() < 0.35) doGlitch();
+      }, 180);
     }
   }
 
+  // tiny delay so images paint first
   setTimeout(tick, 120);
 }
 
 window.addEventListener("load", () => {
-  setStatus("Intro ready.");
+  setStatus("Intro loaded. Flicker starting.");
   flickerIntro();
 });
 
+// Start the player only after the intro tap.
+// That tap is the user gesture iOS needs to allow playback with audio.
 introStartBtn.addEventListener("click", async () => {
-  setStatus("Starting…");
+  setStatus("Starting story…");
 
-  // Fade out intro overlay
+  // Fade out intro
   introOverlay.classList.add("fade-out");
-  setTimeout(() => { introOverlay.style.display = "none"; }, 420);
+  setTimeout(() => {
+    introOverlay.style.display = "none";
+  }, 420);
 
-  // Boot player and start from this user gesture
-  await bootStoryPlayer({
-    storyJsonPath: STORY_JSON,
-    videoElementId: "video",
-    choicesContainerId: "choices",
-    dimmerElementId: "dimmer",
-    statusElementId: "status"
-  });
+  try {
+    await bootStoryPlayer({
+      storyJsonPath: STORY_JSON,
+      videoElementId: "video",
+      choicesContainerId: "choices",
+      dimmerElementId: "dimmer",
+      statusElementId: "status",
+      onFatal: (msg) => showModal(msg),
+    });
+  } catch (e) {
+    showModal(`BOOT ERROR: ${e?.message || e}`);
+  }
 });
