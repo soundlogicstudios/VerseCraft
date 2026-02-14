@@ -11,16 +11,17 @@
     <section class="stage" aria-label="Video Stage">
       <video id="video" class="video" playsinline preload="metadata"></video>
 
-      <!-- Tap-to-play overlay (also doubles as "autoplay blocked" fix on iOS) -->
-      <button id="tapToPlay" class="tap-to-play" type="button">
-        TAP TO PLAY
-      </button>
+      <!-- Tap-to-play overlay (iOS gesture requirement) -->
+      <button id="tapToPlay" class="tap-to-play" type="button">TAP TO PLAY</button>
 
-      <!-- Debug / error readout -->
+      <!-- Choices -->
+      <div id="choices" class="choices hidden" aria-label="Choices"></div>
+
+      <!-- Debug / status -->
       <div id="status" class="status" aria-live="polite"></div>
     </section>
   </main>
 
-  <script src="src/app.js"></script>
+  <script type="module" src="src/app.js"></script>
 </body>
 </html>
