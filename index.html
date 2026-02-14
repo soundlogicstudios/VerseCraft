@@ -3,22 +3,48 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Branching App</title>
+  <title>Backrooms Branching</title>
   <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-  <main id="app" class="app">
-    <section class="stage" aria-label="Video Stage">
+  <main class="app">
+
+    <!-- BACKGROUND -->
+    <div class="app-background"></div>
+
+    <section class="stage">
+
+      <!-- VIDEO -->
       <video id="video" class="video" playsinline preload="metadata"></video>
 
-      <!-- Tap-to-play overlay (iOS gesture requirement) -->
-      <button id="tapToPlay" class="tap-to-play" type="button">TAP TO PLAY</button>
+      <!-- DIMMER -->
+      <div id="dimmer" class="dimmer"></div>
 
-      <!-- Choices -->
-      <div id="choices" class="choices hidden" aria-label="Choices"></div>
+      <!-- FRAME OVERLAY -->
+      <img
+        src="assets/ui/frames/video_frame_overlay.webp"
+        class="frame-overlay"
+        alt=""
+        aria-hidden="true"
+      />
 
-      <!-- Debug / status -->
-      <div id="status" class="status" aria-live="polite"></div>
+      <!-- TAP BUTTON -->
+      <button id="tapToPlay" class="tap-to-play">TAP TO PLAY</button>
+
+      <!-- CHOICES -->
+      <div id="choices" class="choices hidden"></div>
+
+      <!-- MODAL -->
+      <div id="modalBackdrop" class="modal-backdrop hidden">
+        <div class="modal-panel">
+          <div id="modalContent"></div>
+          <button id="modalClose" class="modal-close">Close</button>
+        </div>
+      </div>
+
+      <!-- STATUS DEBUG -->
+      <div id="status" class="status"></div>
+
     </section>
   </main>
 
