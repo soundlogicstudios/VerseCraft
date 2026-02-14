@@ -9,16 +9,15 @@
 <body>
   <main class="app">
 
-    <!-- BACKGROUND -->
-    <div class="app-background"></div>
+    <!-- APP BACKGROUND (behind everything) -->
+    <div class="app-background" aria-hidden="true"></div>
 
-    <section class="stage">
-
-      <!-- VIDEO -->
+    <!-- VIDEO STAGE -->
+    <section class="stage" aria-label="Video Stage">
       <video id="video" class="video" playsinline preload="metadata"></video>
 
-      <!-- DIMMER -->
-      <div id="dimmer" class="dimmer"></div>
+      <!-- DIMMER (used during choices) -->
+      <div id="dimmer" class="dimmer" aria-hidden="true"></div>
 
       <!-- FRAME OVERLAY -->
       <img
@@ -28,24 +27,52 @@
         aria-hidden="true"
       />
 
-      <!-- TAP BUTTON -->
-      <button id="tapToPlay" class="tap-to-play">TAP TO PLAY</button>
-
       <!-- CHOICES -->
-      <div id="choices" class="choices hidden"></div>
+      <div id="choices" class="choices hidden" aria-label="Choices"></div>
 
-      <!-- MODAL -->
-      <div id="modalBackdrop" class="modal-backdrop hidden">
-        <div class="modal-panel">
-          <div id="modalContent"></div>
-          <button id="modalClose" class="modal-close">Close</button>
+      <!-- MODAL (errors etc) -->
+      <div id="modalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
+        <div class="modal-panel" role="dialog" aria-modal="true">
+          <div id="modalContent" class="modal-content"></div>
+          <button id="modalClose" class="modal-close" type="button">Close</button>
         </div>
       </div>
 
-      <!-- STATUS DEBUG -->
-      <div id="status" class="status"></div>
-
+      <!-- STATUS (debug) -->
+      <div id="status" class="status" aria-live="polite"></div>
     </section>
+
+    <!-- INTRO OVERLAY (flicker + poster + tap to begin) -->
+    <div id="introOverlay" class="intro-overlay" aria-label="Intro">
+      <div class="intro-bg-stack" aria-hidden="true">
+        <div class="bg-layer bg1"></div>
+        <div class="bg-layer bg2"></div>
+        <div class="bg-layer bg3"></div>
+
+        <!-- brief white flash -->
+        <div id="flash" class="flash"></div>
+
+        <!-- subtle scanlines for fluorescent vibe -->
+        <div class="scanlines"></div>
+      </div>
+
+      <div class="intro-modal">
+        <img
+          src="assets/ui/modals/modal_panel.webp"
+          class="intro-panel"
+          alt=""
+          aria-hidden="true"
+        />
+
+        <div class="intro-title">THE BACKROOMS</div>
+        <div class="intro-subtitle">Tap required to begin</div>
+
+        <button id="introStartBtn" class="intro-start-btn" type="button">
+          TAP TO BEGIN
+        </button>
+      </div>
+    </div>
+
   </main>
 
   <script type="module" src="src/app.js"></script>
