@@ -9,11 +9,12 @@
 <body>
   <main class="app">
 
-    <!-- VIDEO STAGE -->
+    <!-- VIDEO STAGE (under intro) -->
     <section class="stage" aria-label="Video Stage">
       <video id="video" class="video" playsinline preload="metadata"></video>
 
-      <!-- FRAME OVERLAY -->
+      <div id="dimmer" class="dimmer" aria-hidden="true"></div>
+
       <img
         src="assets/ui/frames/video_frame_overlay.webp"
         class="frame-overlay"
@@ -21,39 +22,26 @@
         aria-hidden="true"
       />
 
-      <!-- CHOICES -->
-      <div id="choices" class="choices hidden"></div>
-
-      <!-- STATUS -->
-      <div id="status" class="status"></div>
+      <div id="choices" class="choices hidden" aria-label="Choices"></div>
+      <div id="status" class="status" aria-live="polite"></div>
     </section>
 
     <!-- INTRO OVERLAY -->
-    <div id="introOverlay" class="intro-overlay">
+    <div id="introOverlay" class="intro-overlay" aria-label="Intro">
 
-      <div class="intro-bg-stack">
-        <div class="bg-layer bg1"></div>
-        <div class="bg-layer bg2"></div>
-        <div class="bg-layer bg3"></div>
+      <!-- Poster stack as IMG tags (no CSS path confusion) -->
+      <div class="intro-bg-stack" aria-hidden="true">
+        <img class="bg-img bg1" src="assets/ui/backgrounds/backrooms_variant_1.webp" alt="">
+        <img class="bg-img bg2" src="assets/ui/backgrounds/backrooms_variant_2.webp" alt="">
+        <img class="bg-img bg3" src="assets/ui/backgrounds/backrooms_variant_3.webp" alt="">
 
-        <!-- white flash -->
         <div id="flash" class="flash"></div>
       </div>
 
-      <div class="intro-modal">
-        <img
-          src="assets/ui/modals/modal_panel.webp"
-          class="intro-panel"
-          alt=""
-        />
-
-        <div class="intro-title">THE BACKROOMS</div>
-
-        <button id="introStartBtn" class="intro-start-btn">
-          TAP TO BEGIN
-        </button>
-      </div>
-
+      <!-- Button only (NO injected title, NO injected instruction text) -->
+      <button id="introStartBtn" class="intro-start-btn" type="button">
+        TAP TO BEGIN
+      </button>
     </div>
 
   </main>
