@@ -17,7 +17,6 @@ export async function bootStoryPlayer(cfg) {
   };
 
   // Always keep the video silent so it never interrupts BGM on iOS.
-  // (Even if your MP4 is silent, setting muted prevents audio-session weirdness.)
   function forceVideoSilent() {
     if (!video) return;
     video.muted = true;
@@ -34,36 +33,91 @@ export async function bootStoryPlayer(cfg) {
     narration.load();
   }
 
-  function playNarrationForNode(node) {
-    if (!narration) return;
-
-    // Support a few key names so you can evolve JSON without breaking:
-    // preferred: node.narration
-    // alternates: node.narrative, node.audio, node.narrationAudio
-    const src =
+  function getNarrationSrc(node) {
+    return (
       node?.narration ||
       node?.narrative ||
       node?.audio ||
       node?.narrationAudio ||
-      "";
+      ""
+    );
+  }
+
+  // Wait until the audio has buffered enough to play smoothly.
+  // On iOS Safari, starting too early can cause audible stutter.
+  function waitForAudioReady(audioEl, timeoutMs = 3500) {
+    return new Promise((resolve) => {
+      if (!audioEl) return resolve(false);
+
+      const done = (ok) => {
+        cleanup();
+        resolve(ok);
+      };
+
+      const cleanup = () => {
+        audioEl.removeEventListener("canplay", onCanPlay);
+        audioEl.removeEventListener("canplaythrough", onCanPlayThrough);
+        audioEl.removeEventListener("loadeddata", onLoadedData);
+        audioEl.removeEventListener("error", onErr);
+        clearTimeout(t);
+      };
+
+      const onCanPlay = () => done(true);
+      const onCanPlayThrough = () => done(true);
+      const onLoadedData = () => done(true);
+      const onErr = () => done(false);
+
+      // If already buffered, go immediately.
+      if (audioEl.readyState >= 2) return done(true);
+
+      audioEl.addEventListener("canplay", onCanPlay, { once: true });
+      audioEl.addEventListener("canplaythrough", onCanPlayThrough, { once: true });
+      audioEl.addEventListener("loadeddata", onLoadedData, { once: true });
+      audioEl.addEventListener("error", onErr, { once: true });
+
+      const t = setTimeout(() => done(audioEl.readyState >= 2), timeoutMs);
+    });
+  }
+
+  async function startNarrationForNode(node) {
+    if (!narration) return;
+
+    const src = getNarrationSrc(node);
 
     if (!src) {
       stopNarration();
       return;
     }
 
-    // Set/refresh src
-    if (narration.src !== new URL(src, window.location.href).href) {
+    narration.muted = false;
+    narration.volume = 1;
+
+    // Refresh src if changed
+    const abs = new URL(src, window.location.href).href;
+    if (narration.src !== abs) {
       narration.src = src;
+      narration.preload = "auto";
       narration.load();
     }
 
     narration.currentTime = 0;
 
-    // Try to play; if iOS blocks (rare after initial gesture), we fail soft.
+    // Give the audio a moment to buffer before playing (reduces stutter)
+    await waitForAudioReady(narration);
+
     narration.play().catch(() => {
-      console.warn("Narration autoplay blocked (iOS). User gesture may be required.");
+      console.warn("Narration play blocked (iOS). Try tapping once.");
     });
+  }
+
+  // IMPORTANT:
+  // We intentionally do NOT hard-resync on every timeupdate.
+  // That kind of correction causes audible stutter on iOS.
+  function alignOnce(videoEl, audioEl) {
+    if (!videoEl || !audioEl) return;
+    try {
+      audioEl.currentTime = videoEl.currentTime || 0;
+    } catch {}
   }
 
   setStatus(`Loading story: ${cfg.storyJsonPath}`);
@@ -108,33 +162,6 @@ export async function bootStoryPlayer(cfg) {
     });
   }
 
-  function attachSync(videoEl, audioEl) {
-    if (!videoEl || !audioEl) return;
-
-    // Remove previous handlers so they don't stack
-    videoEl.ontimeupdate = null;
-    videoEl.onended = null;
-    videoEl.onpause = null;
-
-    // Keep narration aligned (light-touch correction)
-    videoEl.ontimeupdate = () => {
-      if (audioEl.paused) return;
-      const drift = Math.abs(videoEl.currentTime - audioEl.currentTime);
-      if (drift > 0.25) {
-        audioEl.currentTime = videoEl.currentTime;
-      }
-    };
-
-    videoEl.onpause = () => {
-      audioEl.pause();
-    };
-
-    videoEl.onended = () => {
-      audioEl.pause();
-      audioEl.currentTime = 0;
-    };
-  }
-
   async function playNode(nodeId) {
     const node = story?.nodes?.[nodeId];
     if (!node) {
@@ -145,11 +172,8 @@ export async function bootStoryPlayer(cfg) {
     currentNodeId = nodeId;
     hideChoices();
 
-    // Reset shown flags for this node each entry (kept for compatibility)
     (node.choices || []).forEach(c => { delete c._shown; });
 
-    // IMPORTANT: Clear prior handlers so they don't stack
-    video.ontimeupdate = null;
     video.onended = null;
     video.onpause = null;
 
@@ -161,10 +185,9 @@ export async function bootStoryPlayer(cfg) {
 
     setStatus(`Playing node "${nodeId}" -> ${node.video}`);
 
-    // Prepare narration BEFORE starting playback so it's ready.
+    // Start narration first (buffer), then start video. This reduces iOS stutter.
     if (narration) {
-      playNarrationForNode(node);
-      attachSync(video, narration);
+      await startNarrationForNode(node);
     }
 
     try {
@@ -174,12 +197,16 @@ export async function bootStoryPlayer(cfg) {
       return;
     }
 
-    // If narration exists but didn't start, try once more now that video is playing.
+    // Align once after video begins (if narration exists and is playing)
     if (narration && narration.src) {
-      narration.play().catch(() => {});
+      alignOnce(video, narration);
+      if (narration.paused) narration.play().catch(() => {});
     }
 
-    // ✅ Choices ONLY at the end (no timers)
+    video.onpause = () => {
+      if (narration) narration.pause();
+    };
+
     video.onended = () => {
       if (narration) {
         narration.pause();
