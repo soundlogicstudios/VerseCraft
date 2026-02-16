@@ -5,16 +5,50 @@
       "video": "src/content/video/backrooms/silent/n02_silent_video.mp4",
       "narration": "src/content/video/backrooms/audio/n02_narrative.m4a",
       "choices": [
-        { "label": "Go Left",  "at": 5, "goto": "n03" },
-        { "label": "Go Right", "at": 5, "goto": "n04" }
+        { "label": "Go Left", "goto": "n03" },
+        { "label": "Go Right", "goto": "n04" }
       ]
     },
+
     "n03": {
-      "video": "src/content/video/backrooms/backrooms_n03_left.mp4",
+      "video": "src/content/video/backrooms/silent/n03_silent_video.mp4",
+      "narration": "src/content/video/backrooms/audio/n03_narrative.m4a",
+      "choices": [
+        { "label": "Keep Searching", "goto": "n05" },
+        { "label": "Look For An Exit", "goto": "n06" }
+      ]
+    },
+
+    "n04": {
+      "video": "src/content/video/backrooms/silent/n04_silent_video.mp4",
+      "narration": "src/content/video/backrooms/audio/n04_narrative.m4a",
+      "choices": [
+        { "label": "Hide", "goto": "n07" },
+        { "label": "Confront", "goto": "n08" }
+      ]
+    },
+
+    "n05": {
+      "video": "src/content/video/backrooms/silent/n05_silent_video.mp4",
+      "narration": "src/content/video/backrooms/audio/n05_narrative.m4a",
       "choices": []
     },
-    "n04": {
-      "video": "src/content/video/backrooms/backrooms_n04_right.mp4",
+
+    "n06": {
+      "video": "src/content/video/backrooms/silent/n06_silent_video.mp4",
+      "narration": "src/content/video/backrooms/audio/n06_narrative.m4a",
+      "choices": []
+    },
+
+    "n07": {
+      "video": "src/content/video/backrooms/silent/n07_silent_video.mp4",
+      "narration": "src/content/video/backrooms/audio/n07_narrative.m4a",
+      "choices": []
+    },
+
+    "n08": {
+      "video": "src/content/video/backrooms/silent/n08_silent_video.mp4",
+      "narration": "src/content/video/backrooms/audio/n08_narrative.m4a",
       "choices": []
     }
   }
